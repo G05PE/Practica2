@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -16,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,35 +28,41 @@ import controller.controller;
 import model.observer;
 
 public class SetingsPanel extends JPanel implements observer{
+	
 	private controller ctrl;
+	private String [] listaMut= {"Insertion", "Exchange", "Investment",
+			 "Heuristic", "Método propio"};
+	private String [] listaCruz= {"PMX", "OX", "Variant of OX", "CX",
+			 "ERX", "Ordinal Coding","Método propio"};
+	private String [] listaSelec= {"Roulette", "Determinist Tournament",
+			"Probabilistic Tournament","Stochastic", "Ranking", 
+			"Truncation", "Otros"};
+	private String [] listaFich= {"ajuste.txt", "datos12.txt", "datos15.txt", "datos30.txt", "tai100a.txt", "tai256c.txt"};
 	private JComboBox<String> selectSelect;
 	private JComboBox<String> selectCross;
 	private JComboBox<String> selectMut;
-	private JComboBox<String> selectFunc;
+	private JComboBox<String> selectFile;
 	private JTextField tNgenerat;
 	private JTextField tCross;
 	private JTextField tElite;
 	private JTextField tPopul;
 	private JTextField tMut;
-	private String[] selecBin = { "Single point", "Uniform"};
-	private String[] selecReal= {"Aritmetic","Single point", "Discret"};
-	private String [] mutBin= {"Basic"};
-	private String [] mutReal= {"Uniform"};
+	private JTextField tTol;
 	private JCheckBox check;
 	private Dimension dim1;
 	private Dimension dim2;
 	private JButton start;
 	private JButton reset;
-	private boolean startOn;
+	private JButton load;
 	private double crossPer;
 	private double elitePer;
 	private double tolPer;
 	private double mutPer;
 	private JPanel cross1;
 	private JPanel mut1;
+	private JPanel loadPanel;
 	private int popSize;
 	private int genNum;
-	private int cod;
 	
 	public SetingsPanel(controller ctlr) {
 		this.ctrl = ctlr;
@@ -83,18 +92,9 @@ public class SetingsPanel extends JPanel implements observer{
 		 setDimText(tPopul, dim1);
 		 tPopul.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					popSize=Integer.parseInt(tPopul.getText());
-					ctrl.setPopulationSize(popSize);
-				}
-				catch(NumberFormatException e)
-				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Population size is not a number","Error",JOptionPane.WARNING_MESSAGE);
-				}
+				setPopSize();
 			} 
 		 });
-		 
 		 this.add(tPopul);
 		 
 		//Generation number---------------------------------------------------
@@ -107,15 +107,7 @@ public class SetingsPanel extends JPanel implements observer{
 		 setDimText(tNgenerat, dim1);
 		 tNgenerat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					genNum=Integer.parseInt(tNgenerat.getText());
-					ctrl.setGenerationNumber(genNum);
-				}
-				catch(NumberFormatException e)
-				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Generation number is not a number","Error",JOptionPane.WARNING_MESSAGE);
-				}
+				setGenSize();
 			} 
 		 });
 		 
@@ -131,43 +123,36 @@ public class SetingsPanel extends JPanel implements observer{
 		 setDimLabel(lTol, dim2);
 		 tolPanel.add(lTol);
 		 
-		 JTextField tTol=new JTextField(tolPer+"");
+		 tTol=new JTextField(tolPer+"");
 		 setDimText(tTol, dim2);
 		 tTol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					tolPer=Double.parseDouble(tTol.getText());
-					ctrl.setTolerancePercent(tolPer);
-				}
-				catch(NumberFormatException e)
-				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Tolerance % is not a number","Error",JOptionPane.WARNING_MESSAGE);
-				}
+				setTolerancia();
 			} 
 		 });
 		 tolPanel.add(tTol);
 		 this.add(tolPanel);
 		 
 		 //Algoritmo de selecciï¿½n----------------------------------------------
-		 JLabel lnAlgSel = new JLabel("Selection algorithm");
-		 setDimLabel(lnAlgSel, dim1);
-		 this.add(lnAlgSel);
-		 this.add(Box.createHorizontalGlue());
-		 String[] selec = { "Roulette", "Determinist Tournament",
-				"Probabilistic Tournament", "Universal Stochastic",
-				"Truncation"};
-		 selectSelect = new JComboBox<String>(selec);
+		 JPanel selectionPanel=new JPanel(new FlowLayout());
+		 BoxLayout box9=new BoxLayout(selectionPanel, BoxLayout.X_AXIS);
+		 selectionPanel.setBorder(BorderFactory.createTitledBorder(
+				 BorderFactory.createSoftBevelBorder(PROPERTIES), "Selection algorithm"));
+		 selectionPanel.setPreferredSize(new Dimension(180, 60));
+		 selectionPanel.setMinimumSize(new Dimension(180, 60));
+		 selectionPanel.setMaximumSize(new Dimension(180, 60));
+		 
+		 selectSelect = new JComboBox<String>(listaSelec);
 		 selectSelect.setEditable(false);
-		 seleccionar(selec[0]);
+		 seleccionar(listaSelec[0]);
 		 selectSelect.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					seleccionar((String)selectSelect.getSelectedItem());
 				}
 		 });
 		 setDimCombobox(selectSelect, dim1);
-		 this.add(selectSelect);
-		 
+		 selectionPanel.add(selectSelect);
+		 this.add(selectionPanel);
 		 //CrossOver----------------------------------------------------
 		 JPanel crossOverPanel=new JPanel(new FlowLayout());
 		 crossOverPanel.setPreferredSize(new Dimension(180, 100));
@@ -180,7 +165,8 @@ public class SetingsPanel extends JPanel implements observer{
 		 JLabel lCruce = new JLabel("CrossoverB");
 		 setDimLabel(lCruce, dim2);
 		 cross1.add(lCruce);
-		 changeCross(selecBin);
+		 
+		 changeCross(listaCruz);
 		 cross1.add(selectCross);
 		 crossOverPanel.add(cross1);
 	 
@@ -194,15 +180,7 @@ public class SetingsPanel extends JPanel implements observer{
 		 setDimText(tCross, dim2);
 		 tCross.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					crossPer=Double.parseDouble(tCross.getText());
-					ctrl.setCrossoverPercent(crossPer);
-				}
-				catch(NumberFormatException e)
-				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Crossover % is not a number","Error",JOptionPane.WARNING_MESSAGE);
-				}
+				setCrossPer();
 			} 
 		 });
 		 cross2.add(tCross);
@@ -222,7 +200,8 @@ public class SetingsPanel extends JPanel implements observer{
 		 JLabel lMut = new JLabel("MutationB");
 		 setDimLabel(lMut, dim2);
 		 mut1.add(lMut);
-		 changeMut(mutBin);
+		 
+		 changeMut(listaMut);
 		 mutationPanel.add(mut1);
 		 
 		 JPanel mut2=new JPanel();
@@ -235,15 +214,7 @@ public class SetingsPanel extends JPanel implements observer{
 		 setDimText(tMut, dim2);
 		 tMut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					mutPer=Double.parseDouble(tMut.getText());
-					ctrl.setMutationPercent(mutPer);
-				}
-				catch(NumberFormatException e)
-				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Mutation % is not a number","Error",JOptionPane.WARNING_MESSAGE);
-				}
+				setMutPer();
 			} 
 		 });
 		 mut2.add(tMut);
@@ -266,68 +237,41 @@ public class SetingsPanel extends JPanel implements observer{
 		 setDimText(tElite, dim2);
 		 tElite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					elitePer=Double.parseDouble(tElite.getText());
-					ctrl.setElitePercent(elitePer);
-				}
-				catch(NumberFormatException e)
-				{
-					JOptionPane.showMessageDialog(new JFrame(),
-							"Elite % is not a number","Error",JOptionPane.WARNING_MESSAGE);
-				}
+				setElitePer();
 			} 
 		 });
 		 elitePanel.add(tElite);
 		 this.add(elitePanel);
 		 
-		//Funciones-----------------------------------------------------------
-		 JLabel lFun = new JLabel("Function");
-		 setDimLabel(lFun, dim1);
-		 this.add(lFun);
-		 this.add(Box.createHorizontalGlue());
-		 String[] selec4 = { "Function 1", "Function 2", "Function 3", "Function 4"};
-		 selectFunc = new JComboBox<String>(selec4);
-		 selectFunc.setEditable(false);
-		 seleccionarFun(selec4[0]);
-		 selectFunc.addActionListener(new ActionListener() {
+		//Cargar ficheros
+		 loadPanel=new JPanel(new FlowLayout());
+		 BoxLayout box8=new BoxLayout(loadPanel, BoxLayout.X_AXIS);
+		 loadPanel.setBorder(BorderFactory.createTitledBorder(
+				 BorderFactory.createSoftBevelBorder(PROPERTIES), "Load file"));
+		 loadPanel.setPreferredSize(new Dimension(180, 60));
+		 loadPanel.setMinimumSize(new Dimension(180, 60));
+		 loadPanel.setMaximumSize(new Dimension(180, 60));
+		 selectFile = new JComboBox<String>(listaFich);
+		 selectFile.setEditable(false);
+		 setDimCombobox(selectFile, dim1);
+		 seleccionarMutacion(listaFich[0]);
+		 selectFile.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					seleccionarFun((String)selectFunc.getSelectedItem());
+					seleccionarFichero((String)selectFile.getSelectedItem());
 				}
 		 });
-		 setDimCombobox(selectFunc, dim1);
-		 this.add(selectFunc);
+		 loadPanel.add(selectFile);
+		 this.add(loadPanel);
 		 
-		 //Representacion real checkbox
-		 check=new JCheckBox("RealCode");
-		 check.setSelected(false);
-		 check.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					ctrl.elegirCodificacion(1);
-					changeCross(selecReal);
-					selectFunc.setEnabled(false);
-					changeMut(mutReal);
-				}
-				else {
-					ctrl.elegirCodificacion(0);
-					selectFunc.setEnabled(true);
-					changeCross(selecBin);
-					changeMut(mutBin);
-				}
-			}
-		});
-		 check.setVisible(false);
-		 this.add(check);
 		 //Botones-------------------------------------------------
-		 this.add(Box.createRigidArea(new Dimension(190, 40)));
+		 this.add(Box.createRigidArea(new Dimension(190, 20)));
 		 start = new JButton();
 		 start.setIcon(new ImageIcon("icons/start.png"));
 		 start.setToolTipText("Start");
 		 start.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		 start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ctrl.start();
+				start();
 			} 
 		 });
 		 this.add(start);
@@ -349,6 +293,124 @@ public class SetingsPanel extends JPanel implements observer{
 		this.setVisible(true);
 	}
 	
+	protected void seleccionarFichero(String selectedItem) {
+		/*switch(selectedItem) {
+		case "ajuste.txt":
+			ctrl.seleccionarFichero(0);
+			break;
+		case "datos12.txt":
+			ctrl.seleccionarFichero(1);
+			break;
+		case "datos15.txt":
+			ctrl.seleccionarFichero(2);
+			break;
+		case "datos30.txt":
+			ctrl.seleccionarFichero(3);
+			break;
+		case "tai100a.txt":
+			ctrl.seleccionarFichero(4);
+			break;
+		case "tai256c.txt":
+			ctrl.seleccionarFichero(5);
+			break;
+		}*/
+		ctrl.seleccionarFichero(selectedItem);
+	}
+
+	protected void start() {
+		setPopSize();
+		setGenSize();
+		setCrossPer();
+		setElitePer();
+		setMutPer();
+		setTolerancia();
+		ctrl.start();
+	}
+
+
+	protected void setElitePer() {
+		try {
+			elitePer=Double.parseDouble(tElite.getText());
+			ctrl.setElitePercent(elitePer);
+		}
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Elite per is not a number","Error",JOptionPane.WARNING_MESSAGE);
+		}
+		
+	}
+
+
+	protected void setMutPer() {
+		try {
+			mutPer=Double.parseDouble(tMut.getText());
+			ctrl.setMutationPercent(mutPer);
+		}
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Mutation percent is not a number","Error",JOptionPane.WARNING_MESSAGE);
+		}
+		
+	}
+
+	protected void setCrossPer() {
+		
+		try {
+			crossPer=Double.parseDouble(tCross.getText());
+			ctrl.setCrossoverPercent(crossPer);
+		}
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Cross percent is not a number","Error",JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+
+	protected void setTolerancia() {
+		try {
+			tolPer=Double.parseDouble(tTol.getText());
+			ctrl.setTolerancePercent(tolPer);
+		}
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Tolerance percent is not a number","Error",JOptionPane.WARNING_MESSAGE);
+		}
+		
+	}
+
+
+	protected void setGenSize() {
+		
+		try {
+			genNum=Integer.parseInt(tNgenerat.getText());
+			ctrl.setGenerationNumber(genNum);
+		}
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Generation size is not a number","Error",JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+
+	protected void setPopSize() {
+		try {
+			popSize=Integer.parseInt(tPopul.getText());
+			ctrl.setPopulationSize(popSize);
+		}
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(new JFrame(),
+					"Population size is not a number","Error",JOptionPane.WARNING_MESSAGE);
+		}
+		
+	}
+
+
 	private void initFields() {
 		crossPer=60;
 		elitePer=5;
@@ -392,35 +454,39 @@ public class SetingsPanel extends JPanel implements observer{
 		 cross1.repaint();
 		 this.repaint();
 	}
+	
 	public void refreshText() {
-		ctrl.elegirCodificacion(0);
-		changeCross(selecBin);
-		changeMut(mutBin);
 		selectSelect.setSelectedIndex(0);
 		selectCross.setSelectedIndex(0);
 		selectMut.setSelectedIndex(0);
-		selectFunc.setSelectedIndex(0);
 		tNgenerat.setText(genNum+"");
 		tCross.setText(crossPer+"");
 		tElite.setText(elitePer+"");
 		tPopul.setText(popSize+"");
 		tMut.setText(mutPer+"");
-		selectFunc.setEnabled(true);
-		selectMut.setEnabled(true);
 		this.repaint();
 	}
 	private void seleccionarCruce(String cruce) {
 		switch(cruce) {
-		case "Single point":
+		case "PMX":
 			ctrl.setCrossFunct(0);
 			break;
-		case "Uniform":
+		case "OX":
 			ctrl.setCrossFunct(1);
 			break;
-		case "Aritmetic":
+		case "Variant of OX":
 			ctrl.setCrossFunct(2);
 			break;
-		case "Discret":
+		case "CX":
+			ctrl.setCrossFunct(3);
+			break;
+		case "ERX":
+			ctrl.setCrossFunct(3);
+			break;
+		case "Ordinal Coding":
+			ctrl.setCrossFunct(3);
+			break;
+		case "Método propio":
 			ctrl.setCrossFunct(3);
 			break;
 		default:
@@ -439,11 +505,17 @@ public class SetingsPanel extends JPanel implements observer{
 		case "Probabilistic Tournament":
 			ctrl.establecerMetodoSeleccion(2);
 			break;
-		case "Universal Stochastic":
+		case "Stochastic":
 			ctrl.establecerMetodoSeleccion(3);
 			break;
 		case "Truncation":
 			ctrl.establecerMetodoSeleccion(4);
+			break;
+		case "Ranking":
+			ctrl.establecerMetodoSeleccion(5);
+			break;
+		case "Otros":
+			ctrl.establecerMetodoSeleccion(6);
 			break;
 			default:
 				break;
@@ -452,93 +524,20 @@ public class SetingsPanel extends JPanel implements observer{
 	
 	private void seleccionarMutacion(String mutacion) {
 		switch(mutacion){
-		case "Basic":
+		case "Insertion":
 			ctrl.setMutationFunct(0);
 			break;
-		case "Uniform":
+		case "Exchange":
 			ctrl.setMutationFunct(1);
 			break;
-			default:
-				break;
-		}
-	}
-	
-	private void seleccionarFun(String fun) {
-		ctrl.elegirCodificacion(0);
-		if(check!=null) check.setVisible(false);
-		switch(fun) {
-		case "Function 1":
-			ctrl.establecerFuncion(0,0);
+		case "Investment":
+			ctrl.setMutationFunct(2);
 			break;
-		case "Function 2":
-			ctrl.establecerFuncion(1,0);
+		case "Heuristic":
+			ctrl.setMutationFunct(3);
 			break;
-		case "Function 3":
-			JFrame frame = new JFrame("");
-			String [] n = {"1", "2"};
-			String intro = (String) JOptionPane.showInputDialog(
-			frame, // contenedor padre
-			"Select number of variables", // mensaje en la ventana
-			"Select", // etiqueta de la ventana
-			JOptionPane.QUESTION_MESSAGE, // icono seleccionado
-			null, // icono seleccionado por el usuario (Icon)
-			n, // opciones para seleccionar
-			n[0]);
-			try {
-				ctrl.establecerFuncion(2, Integer.parseInt(intro));
-			}
-			catch(NumberFormatException e)
-			{
-				JOptionPane.showMessageDialog(new JFrame(),
-						"The value is not a number","Error",JOptionPane.WARNING_MESSAGE);
-			}
-			break;
-		case "Function 4":
-			JFrame frame2 = new JFrame("");
-			frame2.setPreferredSize(new Dimension(190, 120));
-			frame2.setMaximumSize(new Dimension(190, 120));
-			frame2.setMinimumSize(new Dimension(190, 120));
-			frame2.setResizable(false);
-			JPanel p=new JPanel();
-			p.setAlignmentX(CENTER_ALIGNMENT);
-			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-			frame2.setAlwaysOnTop(true);
-			JLabel l=new JLabel("Enter number of variables");
-			setDimLabel(l, dim1);
-			p.add(l);
-			JTextField f=new JTextField("1");
-			setDimText(f, dim1);
-			 f.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					try {
-	
-						ctrl.establecerFuncion(3, Integer.parseInt(f.getText()));
-						frame2.setVisible(false);
-					}
-					catch(NumberFormatException e)
-					{
-						JOptionPane.showMessageDialog(new JFrame(),
-								"The value is not a number","Error",JOptionPane.WARNING_MESSAGE);
-					}
-				} 
-			 });
-			 p.add(f);
-			 p.add(Box.createRigidArea(new Dimension(190, 10)));
-			 JButton ok=new JButton("Ok");
-			 setDimButton(ok, dim2);
-			 ok.setAlignmentY(BOTTOM_ALIGNMENT);
-			 ok.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						ctrl.establecerFuncion(3, Integer.parseInt(f.getText()));
-						frame2.setVisible(false);
-					} 
-				 });
-			 p.add(ok);
-			 
-			 frame2.setContentPane(p);
-			 frame2.pack();
-			 frame2.setVisible(true);
-			 if(check!=null) check.setVisible(true);
+		case "Método propio":
+			ctrl.setMutationFunct(4);
 			break;
 			default:
 				break;
@@ -573,16 +572,10 @@ public class SetingsPanel extends JPanel implements observer{
 	}
 
 	@Override
-	public void changedCode(int codificacion) {
-		cod=codificacion;
-	}
-
-	@Override
 	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Double> bestVars) {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public void onNextGeneration() {
