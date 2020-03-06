@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.File;
+
 import model.manager;
 import model.observer;
 
@@ -59,5 +61,8 @@ public class controller {
 	}
 	public void reset() {
 		manager.reset();
+	}
+	public void seleccionarFichero(String i) {
+		manager.seleccionarFichero(i);
 	}
 }

@@ -1,5 +1,4 @@
 package view;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.List;
 
@@ -61,12 +60,6 @@ public class graphPanel extends JPanel implements observer {
 	}
 	@Override
 	public void onNextGeneration() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void changedCode(int codificacion) {
 		// TODO Auto-generated method stub
 		
 	}

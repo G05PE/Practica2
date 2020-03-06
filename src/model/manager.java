@@ -180,5 +180,8 @@ public class manager {
 	public void reset() {
 		iniciarDatos();
 	}
+	public void seleccionarFichero(String i) {
+		
+	}
 }
 
