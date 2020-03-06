@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import controller.controller;
 import model.manager;
+import view.mainWindow;
  
 public class main
 {
@@ -17,7 +18,7 @@ public class main
 	        try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				public void run() {
-					view.mainWindow window = new view.mainWindow(c);
+					mainWindow window = new mainWindow(c);
 					window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 					window.addWindowListener(new WindowAdapter() {
 						 public void windowClosing(WindowEvent e) {
