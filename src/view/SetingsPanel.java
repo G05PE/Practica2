@@ -111,26 +111,6 @@ public class SetingsPanel extends JPanel implements observer{
 		 
 		 this.add(tNgenerat);
 		 
-		 //Tolerancia----------------------------------------------------
-		 JPanel tolPanel=new JPanel();
-		 tolPanel.setPreferredSize(new Dimension(190,30));
-		 tolPanel.setMaximumSize(new Dimension(190,30));
-		 tolPanel.setMinimumSize(new Dimension(190,30));
-		 BoxLayout box7=new BoxLayout(tolPanel, BoxLayout.X_AXIS);
-		 JLabel lTol = new JLabel("Tolerance ");
-		 setDimLabel(lTol, dim2);
-		 tolPanel.add(lTol);
-		 
-		 tTol=new JTextField(tolPer+"");
-		 setDimText(tTol, dim2);
-		 tTol.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setTolerancia();
-			} 
-		 });
-		 tolPanel.add(tTol);
-		 this.add(tolPanel);
-		 
 		 //Algoritmo de selecci�n----------------------------------------------
 		 JPanel selectionPanel=new JPanel(new FlowLayout());
 		 BoxLayout box9=new BoxLayout(selectionPanel, BoxLayout.X_AXIS);
@@ -301,7 +281,6 @@ public class SetingsPanel extends JPanel implements observer{
 		setCrossPer();
 		setElitePer();
 		setMutPer();
-		setTolerancia();
 		ctrl.start();
 	}
 
@@ -345,21 +324,6 @@ public class SetingsPanel extends JPanel implements observer{
 					"Cross percent is not a number","Error",JOptionPane.WARNING_MESSAGE);
 		}
 	}
-
-
-	protected void setTolerancia() {
-		try {
-			tolPer=Double.parseDouble(tTol.getText());
-			ctrl.setTolerancePercent(tolPer);
-		}
-		catch(NumberFormatException e)
-		{
-			JOptionPane.showMessageDialog(new JFrame(),
-					"Tolerance percent is not a number","Error",JOptionPane.WARNING_MESSAGE);
-		}
-		
-	}
-
 
 	protected void setGenSize() {
 		

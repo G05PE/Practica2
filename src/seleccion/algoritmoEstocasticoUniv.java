@@ -19,7 +19,7 @@ public class algoritmoEstocasticoUniv extends algoritmoSeleccion {
 	}
 	public poblacion ini(poblacion p, funcion f) {
 		probSeleccion=new ArrayList<Double>();
-		iniSeleccionados(p.getSize(), p.getPrecision(), p.getFuncion());
+		iniSeleccionados(p.getSize(), p.getFuncion());
 		asignarProbabilidades(p);
 		distancia=(double)1/p.getSize();
 		seleccionar(p, f);

@@ -18,7 +18,7 @@ public class algoritmoRuleta extends algoritmoSeleccion{
 	}
 	public poblacion ini(poblacion p, funcion f) {
 		probSeleccion=new ArrayList<Double>();
-		iniSeleccionados(p.getSize(), p.getPrecision(), p.getFuncion());
+		iniSeleccionados(p.getSize(),p.getFuncion());
 		asignarProbabilidades(p);
 		seleccionar(p, f);
 		getSeleccionados().iniBest();

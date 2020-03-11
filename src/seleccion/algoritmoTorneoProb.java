@@ -35,7 +35,7 @@ public class algoritmoTorneoProb extends algoritmoTorneo{
 	public poblacion ini(poblacion pob, funcion fun) {
 		p=Math.random()%1 + 0.5;
 		if(p > 1) p-=0.5;
-		iniSeleccionados(pob.getSize(), pob.getPrecision(), pob.getFuncion());
+		iniSeleccionados(pob.getSize(), pob.getFuncion());
 		seleccionar(pob, fun);
 		getSeleccionados().iniBest();
 		return getSeleccionados();

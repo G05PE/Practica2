@@ -42,7 +42,7 @@ public abstract class algoritmoSeleccion {
 		return seleccionados;
 	}
 	
-	public void iniSeleccionados(int tam, double prec, funcion f) {
-		seleccionados=new poblacion(tam, prec, f);
+	public void iniSeleccionados(int tam, funcion f) {
+		seleccionados=new poblacion(tam, f);
 	}
 }

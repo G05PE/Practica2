@@ -56,9 +56,6 @@ public class controller {
 	public void setElitePercent(double elitePer) {
 		manager.setElitePercent(elitePer*0.01);
 	}
-	public void setTolerancePercent(double tolPer) {
-		manager.setTolerancia(tolPer);
-	}
 	public void reset() {
 		manager.reset();
 	}
