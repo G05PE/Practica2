@@ -38,30 +38,6 @@ public class individuo {
 		}*/
 	}
 	
-	/**Recalcula los fenotipos de todos los genes*/
-	public void recalcularFenotipos() {
-		for(int i=0; i < cromosoma.size(); i++) {
-			calcularFenotipo(i);
-		}
-	}
-	
-	/**Calcula el fenotipo del gen i, y establece dicho valor en el gen*/
-	public double calcularFenotipo(int i) {
-		double fenotipo=0.0;
-		/*double tam=cromosoma.get(i).getTam();
-		fenotipo=f.getMinX(i) + bin2dec((List<Boolean>) cromosoma.get(i).getGenotipo())*
-				(f.getMaxX(i)-f.getMinX(i))/(Math.pow(2, tam)-1);
-				*/
-		cromosoma.get(i).setFenotipo(fenotipo);
-		return fenotipo;
-	}
-	/**
-	 * Calcula el fenotipo de una posición
-	 *  especifica despues de haber iniciado el individuo*/
-	public void recalcularFenotipo(int i) {
-		calcularFenotipo(i);
-	}
-	
 	/**Transforma un nï¿½mero en base 2 a un nï¿½mero en base 10*/
 	public double bin2dec(List<Boolean> binario) {
 		int res=0;
@@ -83,7 +59,7 @@ public class individuo {
 	
 	
 	public void calcularFitness() {
-		List<Double> fen=new ArrayList<Double>();
+		List<Integer> fen=new ArrayList<Integer>();
 		for(int i=0; i < cromosoma.size(); i++) {
 			fen.add(cromosoma.get(i).getFenotipo());
 		}
@@ -102,10 +78,6 @@ public class individuo {
 	
 	public void setGen(int i, gen gen) {
 		this.cromosoma.set(i, gen);
-	}
-	
-	public void setFenotipoAt(int i, double valor) {
-		cromosoma.get(i).setFenotipo(valor);
 	}
 	
 	public int getSizeCromosoma(){
