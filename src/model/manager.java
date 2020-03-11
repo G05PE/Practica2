@@ -162,7 +162,9 @@ public class manager {
 	public void setCrossFunct(int i) {
 		switch(i) {
 		case 0:
-			//algCruce=new monopunto();
+			algCruce=new pmx();
+			break;
+		case 1:
 			break;
 		}
 	}

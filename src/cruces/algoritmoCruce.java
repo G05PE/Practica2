@@ -14,6 +14,9 @@ public abstract class algoritmoCruce {
 	public algoritmoCruce(String name) {
 		this.name=name;
 	}
+	
+	public algoritmoCruce() {}
+	
 	public abstract poblacion cruzar(poblacion seleccionados, double prob);
 	protected void ini(double prob, poblacion p) {
 		seleccionados=p;

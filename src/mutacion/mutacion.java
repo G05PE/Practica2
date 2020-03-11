@@ -17,8 +17,11 @@ public abstract class mutacion {
 		switch(name) {
 		case "exchange":
 			return new exchange();
-			/*break;
-		case "heuristic":
+			break;
+		case "insercion":
+			return new insercion();
+			break;
+		/*case "heuristic":
 			return new heuristic();
 			break;
 		case "insercion":
