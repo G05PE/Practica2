@@ -16,6 +16,37 @@ public class funcion {
 		adaptador=new adaptarMin();
 	}
 
+	public funcion(funcion viejo) {
+		adaptador=new adaptarMin(viejo.getAdaptador());
+		tam=viejo.getSize();
+		distancias=copiarArray(viejo.getDistancias(), tam);
+		flujos=copiarArray(viejo.getFlujos(), tam);
+	}
+	private adaptacion getAdaptador() {
+		return adaptador;
+	}
+
+	private int[][] getFlujos() {
+		return flujos;
+	}
+
+	private int [][] getDistancias() {
+		return distancias;
+	}
+
+	public int getSize() {
+		return tam;
+	}
+
+	private int[][] copiarArray(int[][] viejo, int tam) {
+		int[][] nuevo=new int[tam][tam];
+		for(int i=0; i < tam; i++) {
+			for(int j=0; j < tam; j++) {
+				nuevo[i][j]=viejo[i][j];
+			}
+		}
+		return nuevo;
+	}
 	public void cargarDatos(int [][] dist, int [][] fluj, int tam) {
 		distancias=dist;
 		flujos=fluj;

@@ -7,7 +7,7 @@ import model.funcion;
 public class poblacion {
 	
 	private List<individuo> poblacion;
-	private int tam=0;
+	private int tam;
 	private funcion fun;
 	private double best;
 	
@@ -15,7 +15,6 @@ public class poblacion {
 		poblacion=new ArrayList<individuo>();
 		this.tam=tam;
 		fun=f;
-		this.fun=f;
 	}
 	
 	public poblacion(poblacion old) {

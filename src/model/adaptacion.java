@@ -7,6 +7,13 @@ public abstract class adaptacion {
 	private double limit;
 	private boolean adaptado;
 	
+	public adaptacion(adaptacion viejo) {
+		limit=viejo.getLimit();
+		adaptado=viejo.getAdaptado();
+	}
+	public adaptacion() {
+		// TODO Auto-generated constructor stub
+	}
 	public void setLimit(double l) {
 		limit=l;
 		adaptado=false;
