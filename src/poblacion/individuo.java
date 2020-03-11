@@ -2,6 +2,8 @@ package poblacion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import genetica.gen;
 import model.funcion;
 
@@ -27,17 +29,36 @@ public class individuo {
 		fitness=ind.getFitness();
 	}
 
-	/**Crea todos los genes establecidos por la funcion, los a�ade a la lista de
-	 * genes y establece sus fenotipos*/
+	/**Crea todos los genes*/
 	public void crearGenes(funcion f) {
-		/*for(int i=0; i < f.getSize(); i++) {
-			double tam=Math.floor(log2(1 +  
-					(f.getMaxX(i)-f.getMinX(i)) / precision )) + 1;
-			cromosoma.add(new gen(f, precision, tam));
-			fenotipos.add(calcularFenotipo(i));
-		}*/
+		int valor, tam=f.getSize();
+		for(int i=0; i < tam; i++ ) {
+			valor=random(tam);
+			while(existeGen(valor, i))  {
+				valor=random(tam);
+			}
+			cromosoma.add(new gen(valor));
+		}
 	}
 	
+	private int random(int max) {
+		Random r=new Random();
+		int valor;
+		valor=Math.abs(r.nextInt() % max);
+		return valor;
+	}
+	private boolean existeGen(int valor, int i) {
+		boolean existe=false;
+		int j=i-1;
+		if(j >=0) {
+			while(j >= 0 && cromosoma.get(j).getFenotipo() != valor) {
+				j--;
+			}
+			existe= (j >=0);
+		}
+		return existe;
+	}
+
 	/**Transforma un n�mero en base 2 a un n�mero en base 10*/
 	public double bin2dec(List<Boolean> binario) {
 		int res=0;

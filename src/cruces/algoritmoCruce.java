@@ -9,11 +9,7 @@ public abstract class algoritmoCruce {
 	private poblacion seleccionados;
 	private poblacion reproductores;
 	private poblacion descendientes;
-	private String name;
 	
-	public algoritmoCruce(String name) {
-		this.name=name;
-	}
 	public abstract poblacion cruzar(poblacion seleccionados, double prob);
 	protected void ini(double prob, poblacion p) {
 		seleccionados=p;
@@ -95,12 +91,5 @@ public abstract class algoritmoCruce {
 	
 	protected individuo getDescendienteAt(int i) {
 		return descendientes.getIndividuo(i);
-	}
-	public algoritmoCruce getCopia() {
-		switch(name) {
-		case "":
-			return null;//retornar una copia nueva
-		}
-		return null;
 	}
 }

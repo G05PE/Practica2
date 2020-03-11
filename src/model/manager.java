@@ -1,13 +1,10 @@
  package model;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.annotation.processing.FilerException;
 import cruces.*;
 import mutacion.mutacion;
@@ -31,7 +28,7 @@ public class manager {
 	private double probCruc;
 	private double probMut;	
 	private int generation;
-	private manager copia;
+	private funcion copiaFuncion;
 	private elite elite;
 	private int maxIter;
 	private int tamPob;
@@ -75,8 +72,8 @@ public class manager {
 			adaptar();
 			seleccion();
 			desadaptar();
-			reproduccion();
-			mutacion();
+			//reproduccion();
+			//mutacion();
 			elite.incluirElites(poblacion);
 			evaluarPoblacion();
 			generation++;
@@ -204,7 +201,7 @@ public class manager {
 	}
 	
 	private void load(Scanner in, int [][] matrix, int tam) {
-		in.nextLine();//Lee línea vacia
+		//in.nextLine();//Lee línea vacia
 		for(int i=0; i < tam; i++) {
 			for(int j=0; j < tam; j++) {
 				matrix[i][j]=in.nextInt();
@@ -222,7 +219,7 @@ public class manager {
 				if(tam > 0) {
 					flujo=new int[tam][tam];
 					distancia=new int[tam][tam];
-					//save();
+					save();
 					load(in, flujo, tam);
 					load(in, distancia, tam);
 					funcion.cargarDatos(distancia, flujo, tam);
@@ -232,7 +229,7 @@ public class manager {
 					throw new FilerException("Error en la lectura del fichero");
 				}
 			}catch(FilerException | NumberFormatException e) {
-				//restore();
+				restore();
 				System.err.println("Hay un error en el formato del fichero");
 			}
 		}
@@ -241,66 +238,17 @@ public class manager {
 			System.err.println("Can´t open the file");
 		}
 	}
+	private void restore() {
+		funcion=new funcion(copiaFuncion);
+	}
 	public void setObservers(List<observer> obs) {
 		observers=new ArrayList<observer>();
 		for(int i=0; i < obs.size(); i++) {
 			observers.add(obs.get(i));
 		}
 	}
-	private List<Double> copiarVars(){
-		List<Double> nuevo=new ArrayList<Double>();
-		for(int i=0; i < bestVars.size(); i++) {
-			nuevo.add(new Double(bestVars.get(i)));
-		}
-		return nuevo;
-	}
-	/*private void save() {
-		copia=new manager();
-		copia.setObservers(observers);
-		copia.algSel=algSel.getCopia();
-		copia.algCruce.getCopia();
-		copia.setPoblacion(new poblacion(this.poblacion));
-		copia.setBestGen(copiarArray(bestGen, tamPob));
-		copia.setBest(copiarArray(best, tamPob));
-		copia.setAverage(copiarArray(average, tamPob));
-		copia.setBestVars(copiarVars());
-		copia.setAlgMut(algMut.getCopia());
-		copia.setFuncion(new funcion(funcion));
-		copia.setElitePercent(probElite);
-		copia.setProbCruce(probCruc);
-		copia.setMutationPercent(probMut);
-		copia.setGenerationNumber(maxIter);
-		copia.setPopulationSize(tamPob);
-	}*/
-	private void setFuncion(funcion copia) {
-		funcion=copia;
-	}
-	private void setAlgMut(mutacion copia) {
-		algMut=copia;
-	}
-	private void setBestVars(List<Integer> vars) {
-		bestVars=vars;
-	}
-	private void setBestGen(double[][] array) {
-		bestGen=array;
-	}
-	private void setBest(double[][] array) {
-		best=array;
-	}
-	private void setAverage(double[][] array) {
-		average=array;
-	}
-	private double[][] copiarArray(double[][] viejo, int tam) {
-		double[][] nuevo=new double[tam][tam];
-		for(int i=0; i < tam; i++) {
-			for(int j=0; j < tam; j++) {
-				nuevo[i][j]=viejo[i][j];
-			}
-		}
-		return nuevo;
-	}
-	private void setPoblacion(poblacion poblacion) {
-		this.poblacion=poblacion;
+	private void save() {
+		copiaFuncion=new funcion(this.funcion);
 	}
 }
 

@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/seram/Desktop/UCM/GitHub/Practica2/jmatharray.jar"/>
-	<classpathentry kind="lib" path="C:/Users/seram/Desktop/UCM/GitHub/Practica2/jmathplot.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Viktoria/Documents/JavaWorkspace/G05P1/Practica2/jmatharray.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Viktoria/Documents/JavaWorkspace/G05P1/Practica2/jmathplot.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
