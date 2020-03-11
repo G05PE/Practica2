@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import javax.annotation.processing.FilerException;
 import cruces.*;
+import mutacion.mutacion;
 import poblacion.individuo;
 import poblacion.poblacion;
 import seleccion.*;
