@@ -15,7 +15,6 @@ public class main
         	
             manager m=new manager();
 	        controller c=new controller(m);
-	        m.seleccionarFichero("ajuste.txt");
 	        try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				public void run() {
