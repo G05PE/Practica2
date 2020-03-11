@@ -18,7 +18,7 @@ public abstract class algoritmoCruce {
 	protected void ini(double prob, poblacion p) {
 		seleccionados=p;
 		probCruce=prob;
-		reproductores = new poblacion(seleccionados.getSize(), seleccionados.getPrecision(), seleccionados.getFuncion());
+		reproductores = new poblacion(seleccionados.getSize(), seleccionados.getFuncion());
 		descendientes = seleccionados;
 	}
 	

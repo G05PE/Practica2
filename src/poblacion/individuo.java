@@ -11,10 +11,10 @@ public class individuo {
 	private double fitness;
 	private funcion f;
 	
-	public individuo(double precision, funcion f) {
+	public individuo(funcion f) {
 		this.f=f;
 		cromosoma=new ArrayList<gen>();
-		crearGenes(f, precision);
+		crearGenes(f);
 		calcularFitness(); 
 	}
 	
@@ -29,7 +29,7 @@ public class individuo {
 
 	/**Crea todos los genes establecidos por la funcion, los a�ade a la lista de
 	 * genes y establece sus fenotipos*/
-	public void crearGenes(funcion f, double precision) {
+	public void crearGenes(funcion f) {
 		/*for(int i=0; i < f.getSize(); i++) {
 			double tam=Math.floor(log2(1 +  
 					(f.getMaxX(i)-f.getMinX(i)) / precision )) + 1;

@@ -26,7 +26,6 @@ public class manager {
 	private List<Double> bestVars;;
 	private mutacion algMut;
 	private funcion funcion;
-	private double probToler;
 	private double probElite;
 	private double probCruc;
 	private double probMut;	
@@ -43,7 +42,6 @@ public class manager {
 		iniciarDatos();
 	}
 	public void iniciarDatos() {
-		probToler=0.001;
 		probElite=0.05;
 		generation=0;
 		probCruc=0.6;
@@ -58,7 +56,7 @@ public class manager {
 	}
 
 	public void iniciarPoblacion() {
-		poblacion=new poblacion(tamPob, probToler, funcion);
+		poblacion=new poblacion(tamPob, funcion);
 		poblacion.iniciarPoblacion();
 		best=new double[2][maxIter];
 		bestGen=new double[2][maxIter];
@@ -181,9 +179,6 @@ public class manager {
 	public void setElitePercent(double d) {
 		probElite=d;
 	}
-	public void setTolerancia(double tolPer) {
-		probToler=tolPer;
-	}
 	public void reset() {
 		iniciarDatos();
 	}
@@ -250,15 +245,11 @@ public class manager {
 		copia.setBestVars(copiarVars());
 		copia.setAlgMut(algMut.getCopia());
 		copia.setFuncion(new funcion(funcion));
-		copia.setPrecision(probToler);
 		copia.setElitePercent(probElite);
 		copia.setProbCruce(probCruc);
 		copia.setMutationPercent(probMut);
 		copia.setGenerationNumber(maxIter);
 		copia.setPopulationSize(tamPob);
-	}
-	private void setPrecision(double prob) {
-		probToler=prob;
 	}
 	private void setFuncion(funcion copia) {
 		funcion=copia;
