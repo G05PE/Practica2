@@ -7,6 +7,10 @@ import poblacion.poblacion;
 
 public class funcion {
 
+	public funcion(funcion vieja) {
+		//Copiar todos los datos de la funcion vieja
+	}
+
 	public boolean best(double fitness, double fitness2) {
 		// TODO Auto-generated method stub
 		return false;

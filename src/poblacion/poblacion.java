@@ -16,10 +16,24 @@ public class poblacion {
 		poblacion=new ArrayList<individuo>();
 		this.tam=tam;
 		fun=f;
-		this.fun=fun;
+		this.fun=f;
 		precision=prec;
 	}
 	
+	public poblacion(poblacion old) {
+		copiarPoblacion(old);
+		tam=old.getSize();
+		fun=old.getFuncion();
+		best=old.getBest();
+	}
+
+	private void copiarPoblacion(poblacion old) {
+		poblacion=new ArrayList<individuo>();
+		for(int i=0; i < old.getSize(); i++) {
+			poblacion.add(new individuo(old.getIndividuo(i)));
+		}
+	}
+
 	public void iniciarPoblacion() {
 		
 		for(int i=0; i < tam; i++) {
