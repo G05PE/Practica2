@@ -515,7 +515,7 @@ public class SetingsPanel extends JPanel implements observer{
 	}
 
 	@Override
-	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Double> bestVars) {
+	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Integer> bestVars) {
 		// TODO Auto-generated method stub
 		
 	}

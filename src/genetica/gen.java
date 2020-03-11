@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class gen {
 	
-	private List<Integer> genotipo;
-	private double fenotipo;
+	private int genotipo;
+	private int fenotipo;
 	private funcion funcion;
 	private double tam;
 	private Random rand;
@@ -25,17 +25,14 @@ public class gen {
 		fenotipo=gen.getFenotipo();
 		funcion=gen.getFuncion();
 		tam=gen.getSizeGenotipo();
-		genotipo=new ArrayList<Integer>();
-		for(int i=0; i < gen.getGenotipo().size(); i++) {
-			genotipo.add(new Integer(gen.getGenotipo().get(i)));
-		}
+		genotipo=gen.getGenotipo();
 	}
 	
 	private funcion getFuncion() {
 		return funcion;
 	}
 	public int getSizeGenotipo(){
-		return genotipo.size();
+		return 1;
 	}
 
 	public void generarGen() {
@@ -45,14 +42,15 @@ public class gen {
 			genotipo.add(new Integer(rand.nextInt()));
 		}*/
 	}
-	public double getFenotipo() {
+	public int getFenotipo() {
 		return fenotipo;
 	}
 	
-	public List<Integer> getGenotipo() {
+	public int getGenotipo() {
 		return genotipo;
 	}
-	public void setFenotipo(double d) {
+	public void setFenotipo(int d) {
 		fenotipo=d;
+		genotipo=fenotipo;
 	}
 }

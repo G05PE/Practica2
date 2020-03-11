@@ -45,7 +45,7 @@ public class graphPanel extends JPanel implements observer {
 	}
 	
 	@Override
-	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Double> bestVars) {
+	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Integer> bestVars) {
 		plot.removeAllPlots();
 		plot.addLinePlot("Mejor absoluto", best[0], best[1]);
 		plot.addLinePlot("Mejor generación", bestGen[0], bestGen[1]);

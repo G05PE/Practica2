@@ -23,7 +23,7 @@ public class manager {
 	private double bestGen [][];
 	private double average [][];
 	private double best [][];
-	private List<Double> bestVars;;
+	private List<Integer> bestVars;;
 	private mutacion algMut;
 	private funcion funcion;
 	private double probElite;
@@ -37,7 +37,8 @@ public class manager {
 
 	public manager() {
 		observers=new ArrayList<observer>();
-		bestVars=new ArrayList<Double>();
+		bestVars=new ArrayList<Integer>();
+		funcion=new funcion();
 		elite=new elite();
 		iniciarDatos();
 	}
@@ -112,7 +113,7 @@ public class manager {
 		if(generation==0 || funcion.best(bestGen[1][generation], best[1][generation-1])) {
 			best[1][generation]=bestGen[1][generation];
 			bestVars.clear();
-			bestVars.add(best[1][generation]);
+			bestVars.add((int) best[1][generation]);
 			individuo mejor=poblacion.getMejorInd();
 			for(int i=0; i < mejor.getSizeCromosoma(); i++) {
 				bestVars.add(mejor.getCromosomaAt(i).getFenotipo());
@@ -135,7 +136,25 @@ public class manager {
 		switch(metodo)
 		{
 		case 0:
-			//algSel=new algoritmoRuleta();
+			algSel=new algoritmoRuleta();
+			break;
+		case 1:
+			algSel=new algoritmoTorneoDeter();
+			break;
+		case 2:
+			algSel=new algoritmoTorneoProb();
+			break;
+		case 3:
+			algSel=new algoritmoEstocasticoUniv();
+			break;
+		case 4:
+			algSel=new algoritmoTruncamiento();
+			break;
+		case 5:
+			//Ranking
+			break;
+		case 6:
+			//Otro algoritmo
 			break;
 		}
 	}
@@ -193,18 +212,19 @@ public class manager {
 	}
 	
 	public void seleccionarFichero(String fileName) {
-		int [][] matrix1;
-		int [][] matrix2;
+		int [][] flujo;
+		int [][] distancia;
 		try(Scanner in=new Scanner(new File("ficheros/"+fileName));) 
 		{
 			try{
 				int tam=in.nextInt();
 				if(tam > 0) {
-					matrix1=new int[tam][tam];
-					matrix2=new int[tam][tam];
+					flujo=new int[tam][tam];
+					distancia=new int[tam][tam];
 					//save();
-					load(in, matrix1, tam);
-					load(in, matrix2, tam);
+					load(in, flujo, tam);
+					load(in, distancia, tam);
+					funcion.cargarDatos(distancia, flujo, tam);
 				}
 				else
 				{
@@ -233,7 +253,7 @@ public class manager {
 		}
 		return nuevo;
 	}
-	private void save() {
+	/*private void save() {
 		copia=new manager();
 		copia.setObservers(observers);
 		copia.algSel=algSel.getCopia();
@@ -250,14 +270,14 @@ public class manager {
 		copia.setMutationPercent(probMut);
 		copia.setGenerationNumber(maxIter);
 		copia.setPopulationSize(tamPob);
-	}
+	}*/
 	private void setFuncion(funcion copia) {
 		funcion=copia;
 	}
 	private void setAlgMut(mutacion copia) {
 		algMut=copia;
 	}
-	private void setBestVars(List<Double> vars) {
+	private void setBestVars(List<Integer> vars) {
 		bestVars=vars;
 	}
 	private void setBestGen(double[][] array) {

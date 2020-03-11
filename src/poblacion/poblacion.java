@@ -63,8 +63,8 @@ public class poblacion {
 		return best;
 	}
 
-	public double getAverage() {
-		double total=0;
+	public int getAverage() {
+		int total=0;
 		for(int i=0; i < poblacion.size(); i++) {
 			total+=poblacion.get(i).getFitness();
 		}
