@@ -36,4 +36,9 @@ public class funcion {
 		return 0;
 	}
 
+	public boolean worst(double fitness, double fitness2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

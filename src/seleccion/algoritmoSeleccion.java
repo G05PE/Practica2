@@ -15,8 +15,16 @@ public abstract class algoritmoSeleccion {
 	}
 	public algoritmoSeleccion getCopia() {
 		switch(name) {
-		case "":
-			return null;//retornar una copia nueva
+		case "estocastico":
+			return new algoritmoEstocasticoUniv();
+		case "ruleta":
+			return new algoritmoRuleta();
+		case "torneoDeterminista":
+			return new algoritmoTorneoDeter();
+		case "torneoProbabilistico":
+			return new algoritmoTorneoProb();
+		case "truncamiento":
+			return new algoritmoTruncamiento();
 		}
 		return null;
 	}
