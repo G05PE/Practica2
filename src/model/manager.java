@@ -1,10 +1,13 @@
  package model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import javax.annotation.processing.FilerException;
 import cruces.*;
 import poblacion.individuo;
@@ -185,36 +188,28 @@ public class manager {
 		iniciarDatos();
 	}
 	
-	private void load(BufferedReader in, int [][] matrix, int tam) throws FilerException {
-		try {
-			String basura=in.readLine();//Lee línea vacia
-			String [] cadena;
-			for(int i=0; i < tam; i++) {
-				cadena=in.readLine().split(" ");
-				for(int j=0; j < tam; j++) {
-					matrix[i][j]=Integer.parseInt(cadena[j]);
-				}
+	private void load(Scanner in, int [][] matrix, int tam) {
+		in.nextLine();//Lee línea vacia
+		for(int i=0; i < tam; i++) {
+			for(int j=0; j < tam; j++) {
+				matrix[i][j]=in.nextInt();
 			}
-		} catch (IOException e) {
-			throw  new FilerException("Error en la lectura del fichero");
 		}
 	}
 	
 	public void seleccionarFichero(String fileName) {
-		int tam;
 		int [][] matrix1;
 		int [][] matrix2;
-		try(BufferedReader inChars = new BufferedReader(new FileReader("ficheros/"+fileName));) 
+		try(Scanner in=new Scanner(new File("ficheros/"+fileName));) 
 		{
 			try{
-				String cadena=inChars.readLine();
-				if(Integer.parseInt(cadena) > 0) {
-					tam=Integer.parseInt(cadena);
+				int tam=in.nextInt();
+				if(tam > 0) {
 					matrix1=new int[tam][tam];
 					matrix2=new int[tam][tam];
 					//save();
-					load(inChars, matrix1, tam);
-					load(inChars, matrix2, tam);
+					load(in, matrix1, tam);
+					load(in, matrix2, tam);
 				}
 				else
 				{

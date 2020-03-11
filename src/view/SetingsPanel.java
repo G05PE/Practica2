@@ -48,12 +48,10 @@ public class SetingsPanel extends JPanel implements observer{
 	private JTextField tPopul;
 	private JTextField tMut;
 	private JTextField tTol;
-	private JCheckBox check;
 	private Dimension dim1;
 	private Dimension dim2;
 	private JButton start;
 	private JButton reset;
-	private JButton load;
 	private double crossPer;
 	private double elitePer;
 	private double tolPer;
@@ -254,7 +252,7 @@ public class SetingsPanel extends JPanel implements observer{
 		 selectFile = new JComboBox<String>(listaFich);
 		 selectFile.setEditable(false);
 		 setDimCombobox(selectFile, dim1);
-		 seleccionarMutacion(listaFich[0]);
+		 seleccionarFichero(listaFich[0]);
 		 selectFile.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					seleccionarFichero((String)selectFile.getSelectedItem());
@@ -294,26 +292,6 @@ public class SetingsPanel extends JPanel implements observer{
 	}
 	
 	protected void seleccionarFichero(String selectedItem) {
-		/*switch(selectedItem) {
-		case "ajuste.txt":
-			ctrl.seleccionarFichero(0);
-			break;
-		case "datos12.txt":
-			ctrl.seleccionarFichero(1);
-			break;
-		case "datos15.txt":
-			ctrl.seleccionarFichero(2);
-			break;
-		case "datos30.txt":
-			ctrl.seleccionarFichero(3);
-			break;
-		case "tai100a.txt":
-			ctrl.seleccionarFichero(4);
-			break;
-		case "tai256c.txt":
-			ctrl.seleccionarFichero(5);
-			break;
-		}*/
 		ctrl.seleccionarFichero(selectedItem);
 	}
 
@@ -459,6 +437,7 @@ public class SetingsPanel extends JPanel implements observer{
 		selectSelect.setSelectedIndex(0);
 		selectCross.setSelectedIndex(0);
 		selectMut.setSelectedIndex(0);
+		selectFile.setSelectedIndex(0);
 		tNgenerat.setText(genNum+"");
 		tCross.setText(crossPer+"");
 		tElite.setText(elitePer+"");
