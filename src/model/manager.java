@@ -72,7 +72,7 @@ public class manager {
 			adaptar();
 			seleccion();
 			desadaptar();
-			//reproduccion();
+			reproduccion();
 			//mutacion();
 			elite.incluirElites(poblacion);
 			evaluarPoblacion();
@@ -178,7 +178,27 @@ public class manager {
 	public void setCrossFunct(int i) {
 		switch(i) {
 		case 0:
-			//algCruce=new monopunto();
+			//new PMX
+			break;
+		case 1:
+			//new OX
+			break;
+		case 2:
+			//new Variant OX
+			break;
+		case 3:
+			//new CX
+			break;
+		case 4:
+			//new ERX
+			break;
+		case 5:
+			algCruce=new ordinalCoding();
+			break;
+		case 6:
+			//new METODO propio
+			break;
+		default:
 			break;
 		}
 	}

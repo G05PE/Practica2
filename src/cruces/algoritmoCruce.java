@@ -4,6 +4,7 @@ import poblacion.individuo;
 import poblacion.poblacion;
 
 public abstract class algoritmoCruce {
+	
 	private int num_sele_cruce;
 	private double probCruce;
 	private poblacion seleccionados;
@@ -57,15 +58,7 @@ public abstract class algoritmoCruce {
 		reproductores.addIndividuo(i);
 	}
 	
-
-	protected void addDescendiente(individuo i) {
-		descendientes.addIndividuo(i);
-	}
-	
 	//Getters
-	protected individuo getReproductor(int i) {
-		return reproductores.getIndividuo(i);
-	}
 	protected individuo getReproductorAt(int i) {
 		return reproductores.getIndividuo(i);
 	}
