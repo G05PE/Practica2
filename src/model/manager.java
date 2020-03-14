@@ -178,9 +178,6 @@ public class manager {
 	public void setCrossFunct(int i) {
 		switch(i) {
 		case 0:
-			algCruce=new pmx();
-			break;
-		case 1:
 			//new PMX
 			break;
 		case 1:
@@ -200,6 +197,8 @@ public class manager {
 			break;
 		case 6:
 			//new METODO propio
+			break;
+		default:
 			break;
 		}
 	}

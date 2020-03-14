@@ -11,14 +11,6 @@ public abstract class algoritmoCruce {
 	private poblacion reproductores;
 	private poblacion descendientes;
 	
-
-	public algoritmoCruce(String name) {
-		this.name=name;
-	}
-	
-	public algoritmoCruce() {}
-	
-
 	public abstract poblacion cruzar(poblacion seleccionados, double prob);
 	protected void ini(double prob, poblacion p) {
 		seleccionados=p;
@@ -57,10 +49,6 @@ public abstract class algoritmoCruce {
 	
 	
 	//Setters
-	protected void addDescendiente(individuo i) {
-		this.descendientes.addIndividuo(i);
-	}
-	
 	protected void borraUltimoReproductor() {
 		reproductores.borraUltimo();
 	}
