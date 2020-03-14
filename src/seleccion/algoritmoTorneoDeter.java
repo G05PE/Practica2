@@ -8,6 +8,7 @@ public class algoritmoTorneoDeter extends algoritmoTorneo{
 	public algoritmoTorneoDeter() {
 		super("torneoDeterminista");
 	}
+	
 	public poblacion ini(poblacion p, funcion f) {
 		iniSeleccionados(p.getSize(), p.getFuncion());
 		seleccionar(p, f);

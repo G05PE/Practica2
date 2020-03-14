@@ -5,6 +5,14 @@ import poblacion.poblacion;
 
 public class adaptarMin extends adaptacion{
 
+	public adaptarMin(adaptacion adaptador) {
+		super(adaptador);
+	}
+
+	public adaptarMin() {
+		super();
+	}
+
 	protected void ajustar(poblacion p) {
 		for(int i=0; i < p.getSize(); i++) {
 			individuo ind=p.getIndividuo(i);

@@ -424,13 +424,13 @@ public class SetingsPanel extends JPanel implements observer{
 			ctrl.setCrossFunct(3);
 			break;
 		case "ERX":
-			ctrl.setCrossFunct(3);
+			ctrl.setCrossFunct(4);
 			break;
 		case "Ordinal Coding":
-			ctrl.setCrossFunct(3);
+			ctrl.setCrossFunct(5);
 			break;
 		case "Método propio":
-			ctrl.setCrossFunct(3);
+			ctrl.setCrossFunct(6);
 			break;
 		default:
 			break;
@@ -515,7 +515,7 @@ public class SetingsPanel extends JPanel implements observer{
 	}
 
 	@Override
-	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Double> bestVars) {
+	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Integer> bestVars) {
 		// TODO Auto-generated method stub
 		
 	}

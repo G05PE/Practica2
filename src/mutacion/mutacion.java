@@ -3,11 +3,6 @@ package mutacion;
 import poblacion.poblacion;
 
 public abstract class mutacion {
-	private String name;
-	
-	public mutacion(String name) {
-		this.name=name;
-	}
 	
 	public mutacion() {}
 	
@@ -36,5 +31,4 @@ public abstract class mutacion {
 		}
 		return null;
 	}
-  
 }

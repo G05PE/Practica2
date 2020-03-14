@@ -4,19 +4,21 @@ import poblacion.individuo;
 import poblacion.poblacion;
 
 public abstract class algoritmoCruce {
+	
 	private int num_sele_cruce;
 	private double probCruce;
 	private poblacion seleccionados;
 	private poblacion reproductores;
 	private poblacion descendientes;
-	private String name;
 	
+
 	public algoritmoCruce(String name) {
 		this.name=name;
 	}
 	
 	public algoritmoCruce() {}
 	
+
 	public abstract poblacion cruzar(poblacion seleccionados, double prob);
 	protected void ini(double prob, poblacion p) {
 		seleccionados=p;
@@ -68,15 +70,7 @@ public abstract class algoritmoCruce {
 		reproductores.addIndividuo(i);
 	}
 	
-
-	protected void addDescendiente(individuo i) {
-		descendientes.addIndividuo(i);
-	}
-	
 	//Getters
-	protected individuo getReproductor(int i) {
-		return reproductores.getIndividuo(i);
-	}
 	protected individuo getReproductorAt(int i) {
 		return reproductores.getIndividuo(i);
 	}
@@ -102,12 +96,5 @@ public abstract class algoritmoCruce {
 	
 	protected individuo getDescendienteAt(int i) {
 		return descendientes.getIndividuo(i);
-	}
-	public algoritmoCruce getCopia() {
-		switch(name) {
-		case "":
-			return null;//retornar una copia nueva
-		}
-		return null;
 	}
 }

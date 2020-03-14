@@ -7,7 +7,7 @@ import model.funcion;
 public class poblacion {
 	
 	private List<individuo> poblacion;
-	private int tam=0;
+	private int tam;
 	private funcion fun;
 	private double best;
 	
@@ -15,7 +15,6 @@ public class poblacion {
 		poblacion=new ArrayList<individuo>();
 		this.tam=tam;
 		fun=f;
-		this.fun=f;
 	}
 	
 	public poblacion(poblacion old) {
@@ -63,8 +62,8 @@ public class poblacion {
 		return best;
 	}
 
-	public double getAverage() {
-		double total=0;
+	public int getAverage() {
+		int total=0;
 		for(int i=0; i < poblacion.size(); i++) {
 			total+=poblacion.get(i).getFitness();
 		}

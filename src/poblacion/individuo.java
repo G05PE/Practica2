@@ -2,6 +2,8 @@ package poblacion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import genetica.gen;
 import model.funcion;
 
@@ -27,41 +29,36 @@ public class individuo {
 		fitness=ind.getFitness();
 	}
 
-	/**Crea todos los genes establecidos por la funcion, los aï¿½ade a la lista de
-	 * genes y establece sus fenotipos*/
+	/**Crea todos los genes*/
 	public void crearGenes(funcion f) {
-		/*for(int i=0; i < f.getSize(); i++) {
-			double tam=Math.floor(log2(1 +  
-					(f.getMaxX(i)-f.getMinX(i)) / precision )) + 1;
-			cromosoma.add(new gen(f, precision, tam));
-			fenotipos.add(calcularFenotipo(i));
-		}*/
-	}
-	
-	/**Recalcula los fenotipos de todos los genes*/
-	public void recalcularFenotipos() {
-		for(int i=0; i < cromosoma.size(); i++) {
-			calcularFenotipo(i);
+		int valor, tam=f.getSize();
+		for(int i=0; i < tam; i++ ) {
+			valor=random(tam);
+			while(existeGen(valor, i))  {
+				valor=random(tam);
+			}
+			cromosoma.add(new gen(valor));
 		}
 	}
 	
-	/**Calcula el fenotipo del gen i, y establece dicho valor en el gen*/
-	public double calcularFenotipo(int i) {
-		double fenotipo=0.0;
-		/*double tam=cromosoma.get(i).getTam();
-		fenotipo=f.getMinX(i) + bin2dec((List<Boolean>) cromosoma.get(i).getGenotipo())*
-				(f.getMaxX(i)-f.getMinX(i))/(Math.pow(2, tam)-1);
-				*/
-		cromosoma.get(i).setFenotipo(fenotipo);
-		return fenotipo;
+	private int random(int max) {
+		Random r=new Random();
+		int valor;
+		valor=Math.abs(r.nextInt() % max);
+		return valor;
 	}
-	/**
-	 * Calcula el fenotipo de una posición
-	 *  especifica despues de haber iniciado el individuo*/
-	public void recalcularFenotipo(int i) {
-		calcularFenotipo(i);
+	private boolean existeGen(int valor, int i) {
+		boolean existe=false;
+		int j=i-1;
+		if(j >=0) {
+			while(j >= 0 && cromosoma.get(j).getFenotipo() != valor) {
+				j--;
+			}
+			existe= (j >=0);
+		}
+		return existe;
 	}
-	
+
 	/**Transforma un nï¿½mero en base 2 a un nï¿½mero en base 10*/
 	public double bin2dec(List<Boolean> binario) {
 		int res=0;
@@ -83,7 +80,7 @@ public class individuo {
 	
 	
 	public void calcularFitness() {
-		List<Double> fen=new ArrayList<Double>();
+		List<Integer> fen=new ArrayList<Integer>();
 		for(int i=0; i < cromosoma.size(); i++) {
 			fen.add(cromosoma.get(i).getFenotipo());
 		}
@@ -102,10 +99,6 @@ public class individuo {
 	
 	public void setGen(int i, gen gen) {
 		this.cromosoma.set(i, gen);
-	}
-	
-	public void setFenotipoAt(int i, double valor) {
-		cromosoma.get(i).setFenotipo(valor);
 	}
 	
 	public int getSizeCromosoma(){

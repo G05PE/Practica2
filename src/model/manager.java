@@ -1,13 +1,10 @@
  package model;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.annotation.processing.FilerException;
 import cruces.*;
 import mutacion.mutacion;
@@ -24,21 +21,22 @@ public class manager {
 	private double bestGen [][];
 	private double average [][];
 	private double best [][];
-	private List<Double> bestVars;;
+	private List<Integer> bestVars;;
 	private mutacion algMut;
 	private funcion funcion;
 	private double probElite;
 	private double probCruc;
 	private double probMut;	
 	private int generation;
-	private manager copia;
+	private funcion copiaFuncion;
 	private elite elite;
 	private int maxIter;
 	private int tamPob;
 
 	public manager() {
 		observers=new ArrayList<observer>();
-		bestVars=new ArrayList<Double>();
+		bestVars=new ArrayList<Integer>();
+		funcion=new funcion();
 		elite=new elite();
 		iniciarDatos();
 	}
@@ -75,7 +73,7 @@ public class manager {
 			seleccion();
 			desadaptar();
 			reproduccion();
-			mutacion();
+			//mutacion();
 			elite.incluirElites(poblacion);
 			evaluarPoblacion();
 			generation++;
@@ -113,7 +111,7 @@ public class manager {
 		if(generation==0 || funcion.best(bestGen[1][generation], best[1][generation-1])) {
 			best[1][generation]=bestGen[1][generation];
 			bestVars.clear();
-			bestVars.add(best[1][generation]);
+			bestVars.add((int) best[1][generation]);
 			individuo mejor=poblacion.getMejorInd();
 			for(int i=0; i < mejor.getSizeCromosoma(); i++) {
 				bestVars.add(mejor.getCromosomaAt(i).getFenotipo());
@@ -136,7 +134,25 @@ public class manager {
 		switch(metodo)
 		{
 		case 0:
-			//algSel=new algoritmoRuleta();
+			algSel=new algoritmoRuleta();
+			break;
+		case 1:
+			algSel=new algoritmoTorneoDeter();
+			break;
+		case 2:
+			algSel=new algoritmoTorneoProb();
+			break;
+		case 3:
+			algSel=new algoritmoEstocasticoUniv();
+			break;
+		case 4:
+			algSel=new algoritmoTruncamiento();
+			break;
+		case 5:
+			//Ranking
+			break;
+		case 6:
+			//Otro algoritmo
 			break;
 		}
 	}
@@ -165,6 +181,25 @@ public class manager {
 			algCruce=new pmx();
 			break;
 		case 1:
+			//new PMX
+			break;
+		case 1:
+			//new OX
+			break;
+		case 2:
+			//new Variant OX
+			break;
+		case 3:
+			//new CX
+			break;
+		case 4:
+			//new ERX
+			break;
+		case 5:
+			algCruce=new ordinalCoding();
+			break;
+		case 6:
+			//new METODO propio
 			break;
 		}
 	}
@@ -187,7 +222,7 @@ public class manager {
 	}
 	
 	private void load(Scanner in, int [][] matrix, int tam) {
-		in.nextLine();//Lee línea vacia
+		//in.nextLine();//Lee línea vacia
 		for(int i=0; i < tam; i++) {
 			for(int j=0; j < tam; j++) {
 				matrix[i][j]=in.nextInt();
@@ -196,25 +231,26 @@ public class manager {
 	}
 	
 	public void seleccionarFichero(String fileName) {
-		int [][] matrix1;
-		int [][] matrix2;
+		int [][] flujo;
+		int [][] distancia;
 		try(Scanner in=new Scanner(new File("ficheros/"+fileName));) 
 		{
 			try{
 				int tam=in.nextInt();
 				if(tam > 0) {
-					matrix1=new int[tam][tam];
-					matrix2=new int[tam][tam];
-					//save();
-					load(in, matrix1, tam);
-					load(in, matrix2, tam);
+					flujo=new int[tam][tam];
+					distancia=new int[tam][tam];
+					save();
+					load(in, flujo, tam);
+					load(in, distancia, tam);
+					funcion.cargarDatos(distancia, flujo, tam);
 				}
 				else
 				{
 					throw new FilerException("Error en la lectura del fichero");
 				}
 			}catch(FilerException | NumberFormatException e) {
-				//restore();
+				restore();
 				System.err.println("Hay un error en el formato del fichero");
 			}
 		}
@@ -223,66 +259,17 @@ public class manager {
 			System.err.println("Can´t open the file");
 		}
 	}
+	private void restore() {
+		funcion=new funcion(copiaFuncion);
+	}
 	public void setObservers(List<observer> obs) {
 		observers=new ArrayList<observer>();
 		for(int i=0; i < obs.size(); i++) {
 			observers.add(obs.get(i));
 		}
 	}
-	private List<Double> copiarVars(){
-		List<Double> nuevo=new ArrayList<Double>();
-		for(int i=0; i < bestVars.size(); i++) {
-			nuevo.add(new Double(bestVars.get(i)));
-		}
-		return nuevo;
-	}
 	private void save() {
-		copia=new manager();
-		copia.setObservers(observers);
-		copia.algSel=algSel.getCopia();
-		copia.algCruce.getCopia();
-		copia.setPoblacion(new poblacion(this.poblacion));
-		copia.setBestGen(copiarArray(bestGen, tamPob));
-		copia.setBest(copiarArray(best, tamPob));
-		copia.setAverage(copiarArray(average, tamPob));
-		copia.setBestVars(copiarVars());
-		copia.setAlgMut(algMut.getCopia());
-		copia.setFuncion(new funcion(funcion));
-		copia.setElitePercent(probElite);
-		copia.setProbCruce(probCruc);
-		copia.setMutationPercent(probMut);
-		copia.setGenerationNumber(maxIter);
-		copia.setPopulationSize(tamPob);
-	}
-	private void setFuncion(funcion copia) {
-		funcion=copia;
-	}
-	private void setAlgMut(mutacion copia) {
-		algMut=copia;
-	}
-	private void setBestVars(List<Double> vars) {
-		bestVars=vars;
-	}
-	private void setBestGen(double[][] array) {
-		bestGen=array;
-	}
-	private void setBest(double[][] array) {
-		best=array;
-	}
-	private void setAverage(double[][] array) {
-		average=array;
-	}
-	private double[][] copiarArray(double[][] viejo, int tam) {
-		double[][] nuevo=new double[tam][tam];
-		for(int i=0; i < tam; i++) {
-			for(int j=0; j < tam; j++) {
-				nuevo[i][j]=viejo[i][j];
-			}
-		}
-		return nuevo;
-	}
-	private void setPoblacion(poblacion poblacion) {
-		this.poblacion=poblacion;
+		copiaFuncion=new funcion(this.funcion);
 	}
 }
 
