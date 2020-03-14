@@ -177,11 +177,9 @@ public class manager {
 	}
 	public void setCrossFunct(int i) {
 		switch(i) {
-		case 0:
-			//new PMX
+		case 0: algCruce = new pmx();
 			break;
-		case 1:
-			//new OX
+		case 1: algCruce = new ox();
 			break;
 		case 2:
 			//new Variant OX
@@ -193,12 +191,10 @@ public class manager {
 			//new ERX
 			break;
 		case 5:
-			algCruce=new ordinalCoding();
+			algCruce = new ordinalCoding();
 			break;
 		case 6:
 			//new METODO propio
-			break;
-		default:
 			break;
 		}
 	}
