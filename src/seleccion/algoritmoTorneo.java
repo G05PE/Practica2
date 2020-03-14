@@ -29,6 +29,7 @@ public abstract class algoritmoTorneo extends algoritmoSeleccion{
 			luchar(fun);
 		}
 	}
+	
 	public void luchar(funcion fun) {
 		int ganador=0;
 		for(int i=1; i < getK(); i++) {
