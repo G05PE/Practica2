@@ -24,7 +24,7 @@ public class pmx extends algoritmoCruce {
 		initCruce(var1, var2);
 		
 		
-		for(int i = 0; i < getReproductoresSize(); i++) {
+		for(int i = 0; i < getReproductoresSize() - 1; i++) {
 			individuo ind1 = getReproductorAt(i);
 			individuo ind2 = getReproductorAt(i + 1);
 			

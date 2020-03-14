@@ -47,7 +47,6 @@ public abstract class algoritmoCruce {
 	}
 
 	
-	
 	//Setters
 	
 	protected void addDescendiente(individuo i) {
