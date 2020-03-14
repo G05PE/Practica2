@@ -49,6 +49,11 @@ public abstract class algoritmoCruce {
 	
 	
 	//Setters
+	
+	protected void addDescendiente(individuo i) {
+		descendientes.addIndividuo(i);
+	}	
+	
 	protected void borraUltimoReproductor() {
 		reproductores.borraUltimo();
 	}
