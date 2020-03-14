@@ -12,22 +12,12 @@ public class pmx extends algoritmoCruce {
 	public poblacion cruzar(poblacion seleccionados, double prob) {
 		ini(prob, seleccionados);
 		seleccionaReproductores();	
-<<<<<<< Updated upstream
-		//CruzaReproductores
-		return getDescendientes();
-	}
-
-	//Elige un tramo de uno de los reproductores y
-	//cruza preservando el orden y la posiciÛn de la mayor
-	//cantidad posible de elementos del otro.
-=======
 		cruzaReproductores();
 		
 		return getDescendientes();
 	}
 
-	//Elige un tramo de uno de los reproductores y cruza preservando el orden y la posiciÛn
->>>>>>> Stashed changes
+	//Elige un tramo de uno de los reproductores y cruza preservando el orden y la posici√≥n
 	private void cruzaReproductores() {
 		//Elige aleatoriamente dos puntos de corte
 		Random rand = new Random();
@@ -46,22 +36,13 @@ public class pmx extends algoritmoCruce {
 			var2 = aux;
 		}
 		
-<<<<<<< Updated upstream
-		//Rellenamos todos los reproductores
-		for(int i = 0; i < getReproductoresSize(); i++) {
-			this.addDescendiente(getReproductor(i));	
-		}
-		
-		
-		//Intercambia las dos subcadenas entre dichos puntos y mete los descendientes
-=======
+	
 		//Rellenamos todos los descendientes
 		for(int i = 0; i < getReproductoresSize(); i++) {
 			this.addDescendiente(getReproductorAt(i));	
 		}
 				
 		//Intercambia las dos subcadenas entre [var1, var2]
->>>>>>> Stashed changes
 		for(int i = 0; i < getReproductoresSize(); i++) {
 			individuo ind1 = getReproductorAt(i);
 			individuo ind2 = getReproductorAt(i + 1);
@@ -75,10 +56,5 @@ public class pmx extends algoritmoCruce {
 			this.addDescendiente(ind1);
 			this.addDescendiente(ind2);
 		}
-	}
-	
-<<<<<<< Updated upstream
+	}	
 }
-=======
-}
->>>>>>> Stashed changes
