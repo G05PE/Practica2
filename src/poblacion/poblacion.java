@@ -17,11 +17,16 @@ public class poblacion {
 		fun=f;
 	}
 	
-	public poblacion(poblacion old) {
-		copiarPoblacion(old);
+	public poblacion(poblacion old, boolean copiarPob) {
+		if(copiarPob) {
+			copiarPoblacion(old);
+			best=getBest();
+		}
+		else {
+			poblacion=new ArrayList<individuo>();
+		}
 		tam=old.getSize();
 		fun=old.getFuncion();
-		best=old.getBest();
 	}
 
 	private void copiarPoblacion(poblacion old) {
@@ -78,6 +83,7 @@ public class poblacion {
 		return fun;
 	}
 	public void iniBest() {
+		
 		best=poblacion.get(0).getFitness();
 	}
 	public void addIndividuo(individuo i) {

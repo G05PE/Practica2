@@ -1,2 +1,4 @@
 1.- El cruce de codificación ordinal deja la media de la población
 estancada a partir de la generación 20 +-.
+2.-La selección por torneo probabilistico maximiza la media.
+Preguntar al profe si está bien.

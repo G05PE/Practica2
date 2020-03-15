@@ -12,8 +12,8 @@ public abstract class algoritmoTorneo extends algoritmoSeleccion{
 	private int k;
 	private List<individuo> ring;
 	
-	public algoritmoTorneo(String nombre) {
-		super(nombre);
+	public algoritmoTorneo(String name) {
+		super(name);
 		this.k=3;
 		ring=new ArrayList<individuo>();
 	}
@@ -29,7 +29,6 @@ public abstract class algoritmoTorneo extends algoritmoSeleccion{
 			luchar(fun);
 		}
 	}
-	
 	public void luchar(funcion fun) {
 		int ganador=0;
 		for(int i=1; i < getK(); i++) {
