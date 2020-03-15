@@ -236,8 +236,8 @@ public class manager {
 					flujo=new int[tam][tam];
 					distancia=new int[tam][tam];
 					save();
-					load(in, flujo, tam);
 					load(in, distancia, tam);
+					load(in, flujo, tam);
 					funcion.cargarDatos(distancia, flujo, tam);
 				}
 				else

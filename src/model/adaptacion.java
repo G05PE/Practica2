@@ -16,7 +16,6 @@ public abstract class adaptacion {
 	}
 	public void setLimit(double l) {
 		limit=l;
-		adaptado=false;
 	}
 	public double getLimit() {
 		return limit;

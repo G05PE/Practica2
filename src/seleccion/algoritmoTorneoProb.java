@@ -1,6 +1,7 @@
 package seleccion;
 
 import java.util.Random;
+
 import model.funcion;
 import poblacion.individuo;
 import poblacion.poblacion;
@@ -8,9 +9,12 @@ import poblacion.poblacion;
 public class algoritmoTorneoProb extends algoritmoTorneo{
 	
 	public algoritmoTorneoProb() {
-		super("torneoProbabilistico");
+		super("torneoProb");
+		// TODO Auto-generated constructor stub
 	}
+
 	private double p;
+	
 	@Override
 	public void luchar(funcion fun) {
 		Random r=new Random();
@@ -35,7 +39,7 @@ public class algoritmoTorneoProb extends algoritmoTorneo{
 	public poblacion ini(poblacion pob, funcion fun) {
 		p=Math.random()%1 + 0.5;
 		if(p > 1) p-=0.5;
-		iniSeleccionados(pob.getSize(), pob.getFuncion());
+		iniSeleccionados(pob);
 		seleccionar(pob, fun);
 		getSeleccionados().iniBest();
 		return getSeleccionados();
