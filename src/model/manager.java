@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 import javax.annotation.processing.FilerException;
 import cruces.*;
+import mutacion.exchange;
+import mutacion.heuristic;
+import mutacion.insercion;
+import mutacion.investment;
 import mutacion.mutacion;
 import poblacion.individuo;
 import poblacion.poblacion;
@@ -73,7 +77,7 @@ public class manager {
 			seleccion();
 			desadaptar();
 			reproduccion();
-			//mutacion();
+			mutacion();
 			elite.incluirElites(poblacion);
 			evaluarPoblacion();
 			generation++;
@@ -133,26 +137,19 @@ public class manager {
 	public void establerMetodoSeleccion(int metodo) {
 		switch(metodo)
 		{
-		case 0:
-			algSel=new algoritmoRuleta();
+		case 0: algSel=new algoritmoRuleta();
 			break;
-		case 1:
-			algSel=new algoritmoTorneoDeter();
+		case 1: algSel=new algoritmoTorneoDeter();
 			break;
-		case 2:
-			algSel=new algoritmoTorneoProb();
+		case 2: algSel=new algoritmoTorneoProb();
 			break;
-		case 3:
-			algSel=new algoritmoEstocasticoUniv();
+		case 3: algSel=new algoritmoEstocasticoUniv();
 			break;
-		case 4:
-			algSel=new algoritmoTruncamiento();
+		case 4: algSel=new algoritmoTruncamiento();
 			break;
-		case 5:
-			//Ranking
+		case 5: //Ranking
 			break;
-		case 6:
-			//Otro algoritmo
+		case 6: //Otro algoritmo
 			break;
 		}
 	}
@@ -181,28 +178,30 @@ public class manager {
 			break;
 		case 1: algCruce = new ox();
 			break;
-		case 2:
-			//new Variant OX
+		case 2:algCruce = new oxVariant();
 			break;
-		case 3:
-			//new CX
+		case 3: algCruce = new cx();
 			break;
-		case 4:
-			//new ERX
+		case 4: algCruce = new erx();
 			break;
-		case 5:
-			algCruce = new ordinalCoding();
+		case 5: algCruce = new ordinalCoding();
 			break;
-		case 6:
-			//new METODO propio
+		case 6: //new METODO propio
 			break;
 		}
 	}
 	
 	public void setMutationFunct(int i) {
 		switch(i) {
-		case 0:
-			//algMut=new mutacionBasica();
+		case 0: algMut=new insercion();
+			break;
+		case 1: algMut=new exchange();
+			break;		
+		case 2: algMut=new investment();
+			break;
+		case 3: algMut=new heuristic();
+			break;
+		case 4: //Metodo propio
 			break;
 		}
 	}
