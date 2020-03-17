@@ -37,7 +37,7 @@ public class pmx extends algoritmoCruce {
 			var2 = rand.nextInt()%getReproductorAt(i).getSizeCromosoma();
 			
 			//Fuerza que los puntos sean diferentes
-			while(var1 == var2)var2 = rand.nextInt()%getReproductoresSize();
+			while(var1 == var2)var2 = rand.nextInt()%getReproductorAt(i).getSizeCromosoma();
 			
 			//Hacemos los puntos positivos y los ordenamos (var1 <= var2)
 			if(var1 < 0) var1 = -var1;
