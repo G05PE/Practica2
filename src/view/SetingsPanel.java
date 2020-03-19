@@ -30,7 +30,7 @@ import model.observer;
 public class SetingsPanel extends JPanel implements observer{
 	
 	private controller ctrl;
-	private String [] listaMut= {"Insertion", "Exchange", "Investment",
+	private String [] listaMut= {"Insertion", "Exchange", "Inversion",
 			 "Heuristic", "Método propio"};
 	private String [] listaCruz= {"PMX", "OX", "Variant of OX", "CX",
 			 "ERX", "Ordinal Coding","Método propio"};
@@ -473,7 +473,7 @@ public class SetingsPanel extends JPanel implements observer{
 		case "Exchange":
 			ctrl.setMutationFunct(1);
 			break;
-		case "Investment":
+		case "Inversion":
 			ctrl.setMutationFunct(2);
 			break;
 		case "Heuristic":
