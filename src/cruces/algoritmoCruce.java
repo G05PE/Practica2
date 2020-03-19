@@ -12,11 +12,16 @@ public abstract class algoritmoCruce {
 	private poblacion descendientes;
 	
 	public abstract poblacion cruzar(poblacion seleccionados, double prob);
+	
 	protected void ini(double prob, poblacion p) {
 		seleccionados=p;
 		probCruce=prob;
 		reproductores = new poblacion(seleccionados.getSize(), seleccionados.getFuncion());
-		descendientes = seleccionados;
+	}
+	
+
+	protected void iniDescendientes() {
+		descendientes = reproductores;	
 	}
 	
 	protected void seleccionaReproductores() {
@@ -32,6 +37,16 @@ public abstract class algoritmoCruce {
 			borraUltimoReproductor();
 			num_sele_cruce--;
 		}
+		
+		reproductores.setSize(num_sele_cruce);
+	}
+	
+	protected void setSizeDescendientes(int tam) {
+		this.descendientes.setSize(tam);
+	}
+
+	protected int getSeleCruce() {
+		return num_sele_cruce;
 	}
 	
 	public double getProbCruce() {
