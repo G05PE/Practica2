@@ -216,7 +216,6 @@ public class manager {
 	}
 	
 	private void load(Scanner in, int [][] matrix, int tam) {
-		//in.nextLine();//Lee línea vacia
 		for(int i=0; i < tam; i++) {
 			for(int j=0; j < tam; j++) {
 				matrix[i][j]=in.nextInt();

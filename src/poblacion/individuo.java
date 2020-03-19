@@ -109,4 +109,17 @@ public class individuo {
 		fitness=d;
 	}
 
+	public boolean existeGen(gen gen, int ini, int fin) {
+		int i=ini;
+		while(i != fin && 
+				cromosoma.get(i).getGenotipo() != 
+				gen.getGenotipo()) {
+			i=(i+1)%getSizeCromosoma();
+		}
+		if(i==fin) {
+			return false;
+		}
+		return true;
+	}
+
 }
