@@ -1,5 +1,8 @@
 package cruces;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import poblacion.individuo;
 import poblacion.poblacion;
 
@@ -8,7 +11,7 @@ public abstract class algoritmoCruce {
 	private int num_sele_cruce;
 	private double probCruce;
 	private poblacion seleccionados;
-	private poblacion reproductores;
+	private List<Integer> reproductores;
 	private poblacion descendientes;
 	
 	public abstract poblacion cruzar(poblacion seleccionados, double prob);
@@ -16,19 +19,15 @@ public abstract class algoritmoCruce {
 	protected void ini(double prob, poblacion p) {
 		seleccionados=p;
 		probCruce=prob;
-		reproductores = new poblacion(seleccionados.getSize(), seleccionados.getFuncion());
-	}
-	
-
-	protected void iniDescendientes() {
-		descendientes = reproductores;	
+		reproductores = new ArrayList<Integer>();
+		descendientes = seleccionados;	
 	}
 	
 	protected void seleccionaReproductores() {
 		num_sele_cruce=0;
 		for(int i = 0; i < getSeleccionados().getSize(); i++) {
 			if(Math.random()%1 < getProbCruce()) {
-				addReprpoductor(getSeleccionadoConcreto(i));
+				reproductores.add(i);
 				num_sele_cruce++;
 			}		
 		}
@@ -37,8 +36,6 @@ public abstract class algoritmoCruce {
 			borraUltimoReproductor();
 			num_sele_cruce--;
 		}
-		
-		reproductores.setSize(num_sele_cruce);
 	}
 	
 	protected void setSizeDescendientes(int tam) {
@@ -56,11 +53,6 @@ public abstract class algoritmoCruce {
 	public void setProbCruce(double probCruce) {
 		this.probCruce = probCruce;
 	}
-
-	protected void setSizeReproductor(int num_sele_cruce) {
-		reproductores.setSize(num_sele_cruce);
-	}
-
 	
 	//Setters
 	
@@ -69,17 +61,12 @@ public abstract class algoritmoCruce {
 	}	
 	
 	protected void borraUltimoReproductor() {
-		reproductores.borraUltimo();
-	}
-	
-	
-	protected void addReprpoductor(individuo i) {
-		reproductores.addIndividuo(i);
+		reproductores.remove(num_sele_cruce-1);
 	}
 	
 	//Getters
 	protected individuo getReproductorAt(int i) {
-		return reproductores.getIndividuo(i);
+		return seleccionados.getIndividuo(reproductores.get(i));
 	}
 	protected individuo getSeleccionadoConcreto(int i) {
 		return seleccionados.getIndividuo(i);
@@ -91,7 +78,7 @@ public abstract class algoritmoCruce {
 		return descendientes;
 	}
 	protected void setDescendienteAt(int i, individuo hijo) {	
-		descendientes.setIndividuoAt(i, hijo);
+		descendientes.setIndividuoAt(reproductores.get(i), hijo);
 	}
 	
 	protected poblacion getSeleccionados() {

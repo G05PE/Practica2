@@ -12,7 +12,6 @@ public class pmx extends algoritmoCruce {
 	public poblacion cruzar(poblacion seleccionados, double prob) {
 		ini(prob, seleccionados);
 		seleccionaReproductores();	
-		iniDescendientes();
 		cruzaReproductores();
 		
 		return getDescendientes();
