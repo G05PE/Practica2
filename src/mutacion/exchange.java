@@ -8,7 +8,7 @@ import poblacion.poblacion;
 public class exchange extends mutacion{
 
 	@Override
-	public poblacion mutar(poblacion poblacion, double probMutacion) {
+	public void mutar(poblacion poblacion, double probMutacion) {
 		
 		Random rand = new Random();
 
@@ -25,8 +25,6 @@ public class exchange extends mutacion{
 			poblacion.getIndividuo(i).setGen(var1, poblacion.getIndividuo(i).getCromosomaAt(var2));
 			poblacion.getIndividuo(i).setGen(var2, aux);
 		}
-		
-		return poblacion;
 	}
 
 }

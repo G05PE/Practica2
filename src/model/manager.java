@@ -10,7 +10,7 @@ import cruces.*;
 import mutacion.exchange;
 import mutacion.heuristic;
 import mutacion.insercion;
-import mutacion.investment;
+import mutacion.inversion;
 import mutacion.mutacion;
 import poblacion.individuo;
 import poblacion.poblacion;
@@ -197,7 +197,7 @@ public class manager {
 			break;
 		case 1: algMut=new exchange();
 			break;		
-		case 2: algMut=new investment();
+		case 2: algMut=new inversion();
 			break;
 		case 3: algMut=new heuristic();
 			break;
