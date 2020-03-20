@@ -47,6 +47,7 @@ public class pmx extends algoritmoCruce {
 				var2 = aux;
 			}
 			//////////
+			System.out.println("Hola");
 			
 			//Cambia la primera parte
 			for(int u = 0; u < var1; u++) {
@@ -80,6 +81,6 @@ public class pmx extends algoritmoCruce {
 			this.setDescendienteAt(i, ind1);
 			this.setDescendienteAt(i+1, ind2);
 		}
-		
+		 this.setDescendientesSize(this.getNumSel());
 	}
 }
