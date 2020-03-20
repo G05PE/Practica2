@@ -53,7 +53,7 @@ public class metPropio extends algoritmoCruce {
 
 	private void buscarGen(individuo hijo, individuo padre, int i, int punto) {
 		int j=punto;
-		while(j >= 0 && hijo.existeGen(padre.getCromosomaAt(j), 0, hijo.getSizeCromosoma()-1)) {
+		while(j >= 0 && hijo.existeGen(padre.getCromosomaAt(j))) {
 			j--;
 		}
 		if(j >= 0) {
