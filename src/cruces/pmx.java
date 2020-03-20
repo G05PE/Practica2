@@ -81,6 +81,5 @@ public class pmx extends algoritmoCruce {
 			this.setDescendienteAt(i, ind1);
 			this.setDescendienteAt(i+1, ind2);
 		}
-		 this.setDescendientesSize(this.getNumSel());
 	}
 }
