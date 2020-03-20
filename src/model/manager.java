@@ -198,7 +198,7 @@ public class manager {
 			break;
 		case 1: algMut=new exchange();
 			break;		
-		case 2: algMut=new inversion();
+		case 2: algMut= new inversion();
 			break;
 		case 3: algMut=new heuristic();
 			break;
