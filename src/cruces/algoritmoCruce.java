@@ -38,10 +38,6 @@ public abstract class algoritmoCruce {
 		}
 	}
 	
-	protected void setSizeDescendientes(int tam) {
-		this.descendientes.setSize(tam);
-	}
-
 	protected int getSeleCruce() {
 		return num_sele_cruce;
 	}
@@ -64,6 +60,14 @@ public abstract class algoritmoCruce {
 		reproductores.remove(num_sele_cruce-1);
 	}
 	
+	protected void setDescendienteAt(int i, individuo hijo) {	
+		descendientes.setIndividuoAt(reproductores.get(i), hijo);
+	}
+	
+	protected void setDescendientesSize(int numSel) {
+		descendientes.setSize(numSel);
+	}
+	
 	//Getters
 	protected individuo getReproductorAt(int i) {
 		return seleccionados.getIndividuo(reproductores.get(i));
@@ -76,9 +80,6 @@ public abstract class algoritmoCruce {
 	}
 	protected poblacion getDescendientes() {
 		return descendientes;
-	}
-	protected void setDescendienteAt(int i, individuo hijo) {	
-		descendientes.setIndividuoAt(reproductores.get(i), hijo);
 	}
 	
 	protected poblacion getSeleccionados() {
