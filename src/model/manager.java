@@ -11,6 +11,7 @@ import mutacion.exchange;
 import mutacion.heuristic;
 import mutacion.insercion;
 import mutacion.inversion;
+import mutacion.metPropio;
 import mutacion.mutacion;
 import poblacion.individuo;
 import poblacion.poblacion;
@@ -186,7 +187,7 @@ public class manager {
 			break;
 		case 5: algCruce = new ordinalCoding();
 			break;
-		case 6: //new METODO propio
+		case 6: algCruce=new cruces.metPropio();
 			break;
 		}
 	}
