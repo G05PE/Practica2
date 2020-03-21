@@ -31,8 +31,8 @@ public class pmx extends algoritmoCruce {
 
 			var1 = rand.nextInt()%getReproductorAt(i).getSizeCromosoma();
 			var2 = rand.nextInt()%getReproductorAt(i).getSizeCromosoma();
-			if(var1 < 0) var1 = -var1;
-			if(var2 < 0) var2 = -var2;
+			while(var1 < 0) var1 = -var1;
+			while(var2 < 0) var2 = -var2;
 			
 			//Fuerza que los puntos sean diferentes
 			while(var1 == var2) {

@@ -126,5 +126,13 @@ public class individuo {
 		cromosoma.remove(pos);
 	}
 
+	public void cromosomaVacio() {
+		cromosoma = new ArrayList<gen>();
+	}
+
+	public void add(gen elem) {
+		cromosoma.add(elem);
+	}
+
 
 }

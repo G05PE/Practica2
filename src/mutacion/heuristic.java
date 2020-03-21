@@ -22,23 +22,24 @@ public class heuristic extends mutacion{
 		
 		for(int i = 0; i < poblacion.getSize(); i++) {
 			if(prob < probMutacion){
+				
+				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
+				
 				//Elegimos el numero de elementos a permutar
-				int n = rand.nextInt()%poblacion.getIndividuo(i).getSizeCromosoma();
-				while(n <= 1) n = rand.nextInt()%poblacion.getIndividuo(i).getSizeCromosoma();
+				//Los puntos deben ser diferentes
+				int n = rand.nextInt()%maxLong;
+				while(n < 2) n = rand.nextInt()%maxLong;
 				
 				//Escogemos las posiciones y las añadimos a la lista
 			 	for(int j = 0; j < n; j++) {
-			 		int nuevo = rand.nextInt()%poblacion.getIndividuo(i).getSizeCromosoma();
-					if(nuevo < 0)nuevo = -nuevo;
-			 		while(puntos.contains(nuevo)) {
-			 			nuevo = rand.nextInt()%poblacion.getIndividuo(i).getSizeCromosoma();
-						if(n < 0)n = -n;
-			 		}
+			 		int nuevo = rand.nextInt()%maxLong;
+			 		while(puntos.contains(nuevo) || nuevo < 0) nuevo = rand.nextInt()%maxLong;
 			 		puntos.add(nuevo);
 			 	}
 			 	
 			 	//Creamos las permutaciones y elegimos la mejor dentro de cada invidiuo
 			 	individuo solucionAct = new individuo(poblacion.getFuncion());
+			 	solucionAct.cromosomaVacio();
 			 	individuo mejorSolucion = new individuo(poblacion.getFuncion());
 			 	permuta_y_selecciona(poblacion.getIndividuo(i), 0, 0, solucionAct, mejorSolucion);
 			}
@@ -61,7 +62,7 @@ public class heuristic extends mutacion{
 		    
 		        } 
 		        else {
-		        	solucionAct.setGen(i, act.getCromosomaAt(pos));
+		        	solucionAct.add(act.getCromosomaAt(pos));
 		        	permuta_y_selecciona(act, k+1, mejorFitness, solucionAct, mejorSolcion);
 		        	solucionAct.quitaGen(pos);
 		        }
