@@ -11,6 +11,7 @@ public class heuristic extends mutacion{
 
 	
 	List<Integer> puntos = new ArrayList<Integer>();
+	int aux = 0;
 	List<Boolean> leidos = new ArrayList<Boolean>();
 	
 	@Override
@@ -23,31 +24,36 @@ public class heuristic extends mutacion{
 		for(int i = 0; i < poblacion.getSize(); i++) {
 			if(prob < probMutacion){
 				
-				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
-				
-				//Elegimos el numero de elementos a permutar
-				//Los puntos deben ser diferentes
-				int n = rand.nextInt()%maxLong;
-				while(n < 2) n = rand.nextInt()%maxLong;
-				
-				//Escogemos las posiciones y las añadimos a la lista
-			 	for(int j = 0; j < n; j++) {
-			 		int nuevo = rand.nextInt()%maxLong;
-			 		while(puntos.contains(nuevo) || nuevo < 0) nuevo = rand.nextInt()%maxLong;
-			 		puntos.add(nuevo);
-			 		leidos.add(false);
-			 	}
+//				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
+//				
+//				//Elegimos el numero de elementos a permutar
+//				//Los puntos deben ser diferentes
+//				int n = rand.nextInt()%maxLong;
+//				while(n < 2) n = rand.nextInt()%maxLong;
+//				
+//				//Escogemos las posiciones y las añadimos a la lista
+//			 	for(int j = 0; j < n; j++) {
+//			 		int nuevo = rand.nextInt()%maxLong;
+//			 		while(puntos.contains(nuevo) || nuevo < 0) nuevo = rand.nextInt()%maxLong;
+//			 		puntos.add(nuevo);
+//			 		leidos.add(false);
+//			 	}
+		
+				puntos.add(0);
+				puntos.add(4);
+				leidos.add(false);
+				leidos.add(false);
 			 	
 			 	//Creamos las permutaciones y elegimos la mejor dentro de cada invidiuo
-			 	individuo solucionAct = new individuo(poblacion.getFuncion());
-			 	solucionAct.cromosomaVacio();
-			 	individuo mejorSolucion = new individuo(poblacion.getFuncion());
-			 	permuta_y_selecciona(poblacion.getIndividuo(i), 0, 0, solucionAct, mejorSolucion);
+			 	individuo solucionAct = poblacion.getIndividuo(i);
+			 	individuo mejorSol = poblacion.getIndividuo(i);
+			 	permuta_y_selecciona(poblacion.getIndividuo(i), 0, 0, solucionAct, mejorSol);
+			 	poblacion.setIndividuoAt(i, mejorSol);
 			}
 		}		
 	}
 
-	private void permuta_y_selecciona(individuo act, int k, double mejorFitness, individuo solucionAct, individuo mejorSolcion) {
+	private void permuta_y_selecciona(individuo act, int k, double mejorFitness, individuo solucionAct, individuo mejorSol) {
 	    		
 		//Esquema basico de vuelta atras
 		//Recorre k niveles sabiendo los elementos que ha metido en la solucion actual
@@ -56,23 +62,25 @@ public class heuristic extends mutacion{
         	int pos = puntos.get(i);
         	
 			if(!leidos.get(i)) {	
-				
-		        if (k == puntos.size()) {
+		        if (k == puntos.size() - 1) {
+		        	aux = 0;
+
 		        	double fitnessAct = solucionAct.getFitness();
 		        	if(fitnessAct > mejorFitness) {
 		        		mejorFitness = fitnessAct;
-		        		mejorSolcion = solucionAct;
+		        		mejorSol = solucionAct;
 		        	}
-		    
 		        } 
+		        
 		        else {
 		        	leidos.set(i, true);
-		        	solucionAct.add(act.getCromosomaAt(pos));
-		        	permuta_y_selecciona(act, k+1, mejorFitness, solucionAct, mejorSolcion);
-		        	solucionAct.quitaGen(pos);
+		        	solucionAct.setGen(puntos.get(aux), act.getCromosomaAt(pos));
+		        	aux++;
+		        	permuta_y_selecciona(act, k+1, mejorFitness, solucionAct, mejorSol);
 		        	leidos.set(i, false);
 		        }
 			}
 	    }
 	}
 }
+
