@@ -46,6 +46,10 @@ public class pmx extends algoritmoCruce {
 				var2 = aux;
 			}
 			
+
+			ind1.calcularFitness();
+			ind2.calcularFitness();
+			
 			modCromosomas(var1, var2, ind1, ind2);		
 			this.setDescendienteAt(i, ind1);
 			this.setDescendienteAt(i+1, ind2);
