@@ -31,15 +31,16 @@ public class pmx extends algoritmoCruce {
 
 			var1 = rand.nextInt()%getReproductorAt(i).getSizeCromosoma();
 			var2 = rand.nextInt()%getReproductorAt(i).getSizeCromosoma();
+			if(var1 < 0) var1 = -var1;
+			if(var2 < 0) var2 = -var2;
 			
 			//Fuerza que los puntos sean diferentes
 			while(var1 == var2) {
 				var2 = rand.nextInt()%getReproductorAt(i).getSizeCromosoma();
+				if(var2 < 0) var2 = -var2;
 			}
 			
-			//Hacemos los puntos positivos y los ordenamos (var1 <= var2)
-			if(var1 < 0) var1 = -var1;
-			if(var2 < 0) var2 = -var2;
+			//Los ordenamos (var1 <= var2)
 			if(var2 < var1) {
 				int aux = var1;
 				var1 = var2;

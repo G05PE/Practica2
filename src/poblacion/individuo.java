@@ -122,4 +122,9 @@ public class individuo {
 		return true;
 	}
 
+	public void quitaGen(int pos) {
+		cromosoma.remove(pos);
+	}
+
+
 }
