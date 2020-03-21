@@ -24,25 +24,21 @@ public class heuristic extends mutacion{
 		for(int i = 0; i < poblacion.getSize(); i++) {
 			if(prob < probMutacion){
 				
-//				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
-//				
-//				//Elegimos el numero de elementos a permutar
-//				//Los puntos deben ser diferentes
-//				int n = rand.nextInt()%maxLong;
-//				while(n < 2) n = rand.nextInt()%maxLong;
-//				
-//				//Escogemos las posiciones y las añadimos a la lista
-//			 	for(int j = 0; j < n; j++) {
-//			 		int nuevo = rand.nextInt()%maxLong;
-//			 		while(puntos.contains(nuevo) || nuevo < 0) nuevo = rand.nextInt()%maxLong;
-//			 		puntos.add(nuevo);
-//			 		leidos.add(false);
-//			 	}
-		
-				puntos.add(0);
-				puntos.add(4);
-				leidos.add(false);
-				leidos.add(false);
+				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
+				
+				//Elegimos el numero de elementos a permutar
+				//Los puntos deben ser diferentes
+				int n = rand.nextInt()%maxLong;
+				while(n < 2) n = rand.nextInt()%maxLong;
+				
+				//Escogemos las posiciones y las añadimos a la lista
+			 	for(int j = 0; j < n; j++) {
+			 		int nuevo = rand.nextInt()%maxLong;
+			 		while(puntos.contains(nuevo) || nuevo < 0) nuevo = rand.nextInt()%maxLong;
+			 		puntos.add(nuevo);
+			 		leidos.add(false);
+			 	}
+
 			 	
 			 	//Creamos las permutaciones y elegimos la mejor dentro de cada invidiuo
 			 	individuo solucionAct = poblacion.getIndividuo(i);
