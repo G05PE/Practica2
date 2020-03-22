@@ -29,6 +29,9 @@ public class individuo {
 		fitness=ind.getFitness();
 	}
 
+	//Constructor vacio
+	public individuo() {}
+
 	/**Crea todos los genes*/
 	public void crearGenes(funcion f) {
 		int valor, tam=f.getSize();

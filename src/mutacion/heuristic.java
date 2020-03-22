@@ -11,8 +11,9 @@ public class heuristic extends mutacion{
 
 	
 	List<Integer> puntos = new ArrayList<Integer>();
-	int aux = 0;
 	List<Boolean> leidos = new ArrayList<Boolean>();
+	int aux = 0;
+
 	
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
@@ -28,13 +29,13 @@ public class heuristic extends mutacion{
 				
 				//Elegimos el numero de elementos a permutar
 				//Los puntos deben ser diferentes
-				int n = rand.nextInt()%maxLong;
-				while(n < 2) n = rand.nextInt()%maxLong;
+				int n = rand.nextInt(maxLong);
+				while(n < 2) n = rand.nextInt(maxLong);
 				
 				//Escogemos las posiciones y las añadimos a la lista
 			 	for(int j = 0; j < n; j++) {
-			 		int nuevo = rand.nextInt()%maxLong;
-			 		while(puntos.contains(nuevo) || nuevo < 0) nuevo = rand.nextInt()%maxLong;
+			 		int nuevo = rand.nextInt(maxLong);
+			 		while(puntos.contains(nuevo)) nuevo = rand.nextInt(maxLong);
 			 		puntos.add(nuevo);
 			 		leidos.add(false);
 			 	}

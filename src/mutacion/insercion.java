@@ -1,17 +1,16 @@
 package mutacion;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+import genetica.gen;
+import poblacion.individuo;
 import poblacion.poblacion;
 
 public class insercion extends mutacion{
 
 	
-	List<Integer> puntos = new ArrayList<Integer>();
-	
+	individuo mutado = new individuo();
+
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
 		
@@ -20,19 +19,37 @@ public class insercion extends mutacion{
 			
 		for(int i = 0; i < poblacion.getSize(); i++) {
 			if(prob < probMutacion){
-				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
+				mutado = poblacion.getIndividuo(i);
+				
+				int maxLong = mutado.getSizeCromosoma();
 				
 				//Escogemos el numero de elementos mutados
-				int n = rand.nextInt()%maxLong;
-				while(n < 2) n = rand.nextInt()%maxLong;
+				int n = rand.nextInt(maxLong);
 				
 				//Escogemos las n posiciones y mutamos
 			 	for(int j = 0; j < n; j++) {
-			 		int nuevo = rand.nextInt()%maxLong;
-			 		while(puntos.contains(nuevo) || nuevo < 0) nuevo = rand.nextInt()%maxLong;
-			 		puntos.add(nuevo);
-			 		//Mete el elemento en la pos n%3??
+			 		int origen = rand.nextInt(maxLong);			 		
+			 		int destino = rand.nextInt(maxLong);
+			 		while(destino == origen) destino = rand.nextInt(maxLong);
+			 		
+			 		//Movemos las posiciones entre origen y destino
+			 		gen aux = mutado.getCromosomaAt(origen);
+			 		if(origen < destino) {
+			 			for(int u = origen + 1; u <= destino; u++) {
+				 			mutado.setGen(u-1, mutado.getCromosomaAt(u));
+				 		}			 			
+			 		}
+			 		else {
+			 			for(int u = origen -1; u >= destino; u--) {
+				 			mutado.setGen(u+1, mutado.getCromosomaAt(u));
+				 		}			 			
+			 			
+			 			//Finalmente insertamos el origen guardado en el destino
+			 			mutado.setGen(destino, aux);
+			 		}
+			 		
 			 	}
+			 	poblacion.setIndividuoAt(i, mutado);
 			}
 		}
 	}

@@ -33,7 +33,7 @@ public class algoritmoRanking extends algoritmoSeleccion {
 		
 	private void calcularTotalFitness(poblacion p) {
 		for(int i=0; i < p.getSize(); i++) {
-			fitnessIndiv[i] = p.getIndividuo(i).getFitness();
+			//fitnessIndiv[i] = p.getIndividuo(i).getFitness();
 			totalFitness += p.getIndividuo(i).getFitness();
 		}
 	}
