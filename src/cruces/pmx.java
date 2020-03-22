@@ -89,6 +89,5 @@ public class pmx extends algoritmoCruce {
 				}
 			}	
 		}
-		
 	}
 }
