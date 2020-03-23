@@ -27,10 +27,10 @@ public class heuristic extends mutacion{
 				
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
 				
-				//Elegimos el numero de elementos a permutar
-				//Los puntos deben ser diferentes
-				int n = rand.nextInt(maxLong);
-				while(n < 2) n = rand.nextInt(maxLong);
+				//Elegimos el numero de elementos a permutar (Recomiendan entre 2 y 3)
+				int n = 3;
+				double randP = Math.random()%1;
+				if(randP <= 0.5) n = 2;
 				
 				//Escogemos las posiciones y las añadimos a la lista
 			 	for(int j = 0; j < n; j++) {
@@ -50,6 +50,7 @@ public class heuristic extends mutacion{
 		}		
 	}
 
+	//Genera todas las permutaciones posibles y selecciona la mejor (mejorSol)
 	private void permuta_y_selecciona(individuo act, int k, double mejorFitness, individuo solucionAct, individuo mejorSol) {
 	    		
 		//Esquema basico de vuelta atras
@@ -60,8 +61,8 @@ public class heuristic extends mutacion{
         	
 			if(!leidos.get(i)) {	
 		        if (k == puntos.size() - 1) {
+		        	solucionAct.setGen(puntos.get(aux), act.getCromosomaAt(pos));
 		        	aux = 0;
-
 		        	double fitnessAct = solucionAct.getFitness();
 		        	if(fitnessAct > mejorFitness) {
 		        		mejorFitness = fitnessAct;
