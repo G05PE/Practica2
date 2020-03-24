@@ -5,6 +5,8 @@ import poblacion.poblacion;
 
 public class erx extends algoritmoCruce {
 
+	
+	
 	@Override
 	public poblacion cruzar(poblacion seleccionados, double prob) {
 		ini(prob, seleccionados);

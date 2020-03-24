@@ -1,23 +1,16 @@
 package mutacion;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-import poblacion.individuo;
 import poblacion.poblacion;
 
 public class heuristic extends mutacion{
 
-	
-	List<Integer> puntos = new ArrayList<Integer>();
-	List<Boolean> leidos = new ArrayList<Boolean>();
-	int aux = 0;
+	ArrayList<Integer> puntos = new ArrayList<Integer>();
 
-	
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
-		
 		Random rand = new Random();
 		double prob = Math.random()%1;
 		
@@ -27,58 +20,59 @@ public class heuristic extends mutacion{
 				
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
 				
-				//Elegimos el numero de elementos a permutar (Recomiendan entre 2 y 3)
+				//Elegimos el numero de elementos puntos permutar (Recomiendan entre 2 y 3)
 				int n = 3;
-				double randP = Math.random()%1;
-				if(randP <= 0.5) n = 2;
+				if(Math.random()%1 <= 0.5) n = 2;
 				
-				//Escogemos las posiciones y las añadimos a la lista
+				//Escogemos las posiciones y las añadimos puntos la lista
 			 	for(int j = 0; j < n; j++) {
 			 		int nuevo = rand.nextInt(maxLong);
 			 		while(puntos.contains(nuevo)) nuevo = rand.nextInt(maxLong);
 			 		puntos.add(nuevo);
-			 		leidos.add(false);
 			 	}
-
+			 
 			 	
-			 	//Creamos las permutaciones y elegimos la mejor dentro de cada invidiuo
-			 	individuo solucionAct = poblacion.getIndividuo(i);
-			 	individuo mejorSol = poblacion.getIndividuo(i);
-			 	permuta_y_selecciona(poblacion.getIndividuo(i), 0, 0, solucionAct, mejorSol);
-			 	poblacion.setIndividuoAt(i, mejorSol);
+			 	//Genera las permutaciones
+				ArrayList<ArrayList<Integer>> permut = new ArrayList<ArrayList<Integer>>();
+			 	permut = permut(puntos);
+			 	
+			 	for(int p = 0; p < permut.size(); p++) {
+			 		
+			 	}
+			 	
 			}
-		}		
+		}
 	}
+	
 
-	//Genera todas las permutaciones posibles y selecciona la mejor (mejorSol)
-	private void permuta_y_selecciona(individuo act, int k, double mejorFitness, individuo solucionAct, individuo mejorSol) {
-	    		
-		//Esquema basico de vuelta atras
-		//Recorre k niveles sabiendo los elementos que ha metido en la solucion actual
-		//Cuando llega al size requerido pregunta si el fitnes es mejor que el anterior y si lo es lo actualiza
-		for(int i = 0; i < puntos.size(); i++) {
-        	int pos = puntos.get(i);
-        	
-			if(!leidos.get(i)) {	
-		        if (k == puntos.size() - 1) {
-		        	solucionAct.setGen(puntos.get(aux), act.getCromosomaAt(pos));
-		        	aux = 0;
-		        	double fitnessAct = solucionAct.getFitness();
-		        	if(fitnessAct > mejorFitness) {
-		        		mejorFitness = fitnessAct;
-		        		mejorSol = solucionAct;
-		        	}
-		        } 
-		        
-		        else {
-		        	leidos.set(i, true);
-		        	solucionAct.setGen(puntos.get(aux), act.getCromosomaAt(pos));
-		        	aux++;
-		        	permuta_y_selecciona(act, k+1, mejorFitness, solucionAct, mejorSol);
-		        	leidos.set(i, false);
-		        }
+	private ArrayList<ArrayList<Integer>> permut(ArrayList<Integer> puntos) {
+
+		ArrayList<ArrayList<Integer>> ret= new ArrayList<ArrayList<Integer>>();
+
+		//Caso base
+		if(puntos.size() == 1){
+			ret.add(new ArrayList<Integer>(puntos));
+		}
+
+		else {
+			for(int i = 0; i < puntos.size(); i++){
+				ArrayList<Integer> aux = new ArrayList<Integer>(puntos);
+				int act = puntos.get( i );
+				aux.remove( i );
+	
+				//Crea lo que ya teníamos y le cambia lo nuevo
+				ArrayList<ArrayList<Integer>> res = permut(aux);
+	
+				for(int j = 0; j < res.size(); j++){
+					ArrayList<Integer> sig = new ArrayList<Integer>();
+					
+					sig.add(act);
+					sig.addAll(res.get(j) );
+					ret.add(sig);
+				}
 			}
-	    }
+		}
+		return ret;
 	}
 }
 

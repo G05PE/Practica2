@@ -89,6 +89,7 @@ public class individuo {
 		}
 		this.fitness=f.calcularFuncion(fen);
 	}
+	
 	public List<gen> getCromosoma(){
 			return cromosoma;
 	}
