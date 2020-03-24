@@ -3,6 +3,8 @@ package mutacion;
 import java.util.ArrayList;
 import java.util.Random;
 
+import genetica.gen;
+import poblacion.individuo;
 import poblacion.poblacion;
 
 public class heuristic extends mutacion{
@@ -36,10 +38,18 @@ public class heuristic extends mutacion{
 				ArrayList<ArrayList<Integer>> permut = new ArrayList<ArrayList<Integer>>();
 			 	permut = permut(puntos);
 			 	
-			 	for(int p = 0; p < permut.size(); p++) {
-			 		
-			 	}
+			 	individuo mutado = new individuo();
 			 	
+			 	for(int p = 0; p < permut.size(); p++) {
+			 		mutado = poblacion.getIndividuo(i);
+			 		for(int q = 0; q < puntos.size(); q++) {
+			 			int act = permut.get(p).get(q);
+			 			mutado.setGen(puntos.get(q), mutado.getCromosomaAt(act));
+			 		}
+			 		
+			 		mutado.calcularFitness();
+			 		if(poblacion.getIndividuo(i).getFitness() < mutado.getFitness()) poblacion.setIndividuoAt(i, mutado);
+			 	}			 	
 			}
 		}
 	}
