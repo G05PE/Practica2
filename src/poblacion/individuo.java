@@ -29,6 +29,9 @@ public class individuo {
 		fitness=ind.getFitness();
 	}
 
+	//Constructor vacio
+	public individuo() {}
+
 	/**Crea todos los genes*/
 	public void crearGenes(funcion f) {
 		int valor, tam=f.getSize();
@@ -86,6 +89,7 @@ public class individuo {
 		}
 		this.fitness=f.calcularFuncion(fen);
 	}
+	
 	public List<gen> getCromosoma(){
 			return cromosoma;
 	}
@@ -134,5 +138,18 @@ public class individuo {
 		}
 		return true;
 	}
+
+	public void quitaGen(int pos) {
+		cromosoma.remove(pos);
+	}
+
+	public void cromosomaVacio() {
+		cromosoma = new ArrayList<gen>();
+	}
+
+	public void add(gen elem) {
+		cromosoma.add(elem);
+	}
+
 
 }

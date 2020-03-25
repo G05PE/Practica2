@@ -2,6 +2,8 @@ package poblacion;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import genetica.gen;
 import model.funcion;
 
 public class poblacion {
@@ -108,4 +110,12 @@ public class poblacion {
 		return mejor;
 		
 	}
+
+	public boolean contains(gen elem) {
+		for(int i = 0; i < poblacion.size(); i++) {
+			if(poblacion.get(i).getCromosoma() == elem) return true;
+		}
+		return false;
+	}
+
 }

@@ -148,7 +148,7 @@ public class manager {
 			break;
 		case 4: algSel=new algoritmoTruncamiento();
 			break;
-		case 5: //Ranking
+		case 5: //algSel=new algoritmoRanking();
 			break;
 		case 6: //Otro algoritmo
 			break;
