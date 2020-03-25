@@ -24,7 +24,10 @@ public class pmx extends algoritmoCruce {
 		Random rand = new Random();
 		
 		//Inicializa los hijos
-		for(int i = 0; i < getReproductoresSize(); i+=2) {
+	
+		for(int i = 0; i < getReproductoresSize() - 1; i+=2) {
+			individuo ind1 = new individuo(getReproductorAt(i));
+			individuo ind2 = new individuo(getReproductorAt(i + 1));
 			
 			individuo padre1 = getReproductorAt(i);
 			individuo padre2 = getReproductorAt(i+1);
@@ -58,31 +61,35 @@ public class pmx extends algoritmoCruce {
 				
 			//Cambia la primera parte
 			for(int u = 0; u < var1; u++) {
-				for(int j = var1; j < var2; j++) {
-					if(hijo1.getCromosomaAt(u).getGenotipo() == hijo1.getCromosomaAt(j).getGenotipo()) {
-						hijo1.setGen(u, hijo2.getCromosomaAt(j));
+				for(int v = var1; v < var2; v++) {
+					if(ind1.getCromosomaAt(u).getGenotipo() == ind1.getCromosomaAt(v).getGenotipo()) {
+						ind1.setGen(u, ind2.getCromosomaAt(v));
 					}
-					if(hijo2.getCromosomaAt(u).getGenotipo() == hijo2.getCromosomaAt(j).getGenotipo()) {
-						hijo2.setGen(u, hijo1.getCromosomaAt(j));					
-					}
+					if(ind2.getCromosomaAt(u).getGenotipo() == ind2.getCromosomaAt(v).getGenotipo()) {
+						ind2.setGen(u, ind1.getCromosomaAt(v));					}
 				}
 			}
 			
-			//Cambia la segunda parte
-			for(int u = var2; u < padre1.getCromosoma().size(); u++) {
-				for(int j = var1; j < var2; j++) {
-					if(hijo1.getCromosomaAt(u).getGenotipo() == hijo1.getCromosomaAt(j).getGenotipo()) {
-						hijo1.setGen(u, hijo2.getCromosomaAt(j));
-					}
-					if(hijo2.getCromosomaAt(u).getGenotipo() == hijo2.getCromosomaAt(j).getGenotipo()) {
-						hijo2.setGen(u, hijo1.getCromosomaAt(j));					
-					}
-				}	
+			//Intercambia las dos subcadenas entre [var1, var2]
+			for(int u = var1; u != var2; u++){
+				gen aux = new gen(ind1.getCromosomaAt(u));
+				ind1.setGen(u, ind2.getCromosomaAt(u));
+				ind2.setGen(u, aux);
 			}
-			
-			
-			setDescendienteAt(i, hijo1);
-			setDescendienteAt(i+1, hijo2);
+				
+			//Cambia la segunda parte
+			for(int u = var2; u < ind1.getCromosoma().size(); u++) {
+				for(int v = var1; v < var2; v++) {
+					if(ind1.getCromosomaAt(u).getGenotipo() == ind1.getCromosomaAt(v).getGenotipo()) {
+						ind1.setGen(u, ind2.getCromosomaAt(v));
+					}
+					if(ind2.getCromosomaAt(u).getGenotipo() == ind2.getCromosomaAt(v).getGenotipo()) {
+						ind2.setGen(u, ind1.getCromosomaAt(v));					}
+					}	
+				}
+						
+			this.setDescendienteAt(i, ind1);
+			this.setDescendienteAt(i+1, ind2);
 		}
 	}
 }

@@ -1,0 +1,9 @@
+Clases que ha realizado cada miembro.
+Vicky:
+	Cruce CX
+	Cruce OX
+	crucePropio
+	Cruce ordinalCoding
+	Mutación Inversión
+Sergio:
+	Cruce PMX
