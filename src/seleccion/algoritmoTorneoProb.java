@@ -37,8 +37,7 @@ public class algoritmoTorneoProb extends algoritmoTorneo{
 
 	@Override
 	public poblacion ini(poblacion pob, funcion fun) {
-		p=Math.random()%1 + 0.5;
-		if(p > 1) p-=0.5;
+		p=Math.abs(Math.random()%1);
 		iniSeleccionados(pob);
 		seleccionar(pob, fun);
 		getSeleccionados().iniBest();

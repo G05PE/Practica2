@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import org.math.plot.Plot2DPanel;
 
@@ -15,7 +17,7 @@ public class graphPanel extends JPanel implements observer {
 	private Plot2DPanel plot;
 	private int tam;
 	private JLabel fitness;
-	private JLabel variables;
+	private JTextField variables;
 	public graphPanel(controller c) {
 		ctrl=c;
 		ctrl.addObserver(this);
@@ -37,7 +39,8 @@ public class graphPanel extends JPanel implements observer {
 		this.add(plot);
 		
 		fitness=new JLabel("Fitness: ");
-		variables=new JLabel("Variables: ");
+		variables=new JTextField("Variables: ");
+		variables.setEditable(false);
 		this.add(fitness);
 		this.add(variables);
 		this.setVisible(true);
@@ -45,15 +48,16 @@ public class graphPanel extends JPanel implements observer {
 	}
 	
 	@Override
-	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Integer> bestVars) {
+	public void onFinished(double[][] best, double[][] bestGen, double[][] average, List<Integer> bestVars, int mejorEsperado, int pos) {
 		plot.removeAllPlots();
 		plot.addLinePlot("Mejor absoluto", best[0], best[1]);
 		plot.addLinePlot("Mejor generación", bestGen[0], bestGen[1]);
 		plot.addLinePlot("Media generación", average[0], average[1]);
-		fitness.setText("Fitness: " + bestVars.get(0));
+		fitness.setText("Valor buscado: "+mejorEsperado +" Fitness: " + bestVars.get(0)+" Pos: "+pos);
+		
 		String tVariables="Variables:";
 		for(int i=1; i < bestVars.size(); i++) {
-			tVariables+=", "+bestVars.get(i);
+			tVariables+=" "+bestVars.get(i);
 		}
 		variables.setText(tVariables);
 		this.repaint();
