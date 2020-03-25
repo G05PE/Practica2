@@ -10,11 +10,12 @@ public class exchange extends mutacion{
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
 		
-		Random rand = new Random();
-		double prob = Math.random()%1;
-		
 		for(int i = 0; i < poblacion.getSize(); i++) {
+			double prob = Math.random()%1;
+			
 			if(prob < probMutacion){
+				Random rand = new Random();
+
 				int var1 = rand.nextInt(poblacion.getIndividuo(i).getSizeCromosoma());
 				int var2 = rand.nextInt(poblacion.getIndividuo(i).getSizeCromosoma());
 				

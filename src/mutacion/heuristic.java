@@ -3,7 +3,6 @@ package mutacion;
 import java.util.ArrayList;
 import java.util.Random;
 
-import genetica.gen;
 import poblacion.individuo;
 import poblacion.poblacion;
 
@@ -13,12 +12,11 @@ public class heuristic extends mutacion{
 
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
-		Random rand = new Random();
-		double prob = Math.random()%1;
-		
-		
+				
 		for(int i = 0; i < poblacion.getSize(); i++) {
+			double prob = Math.random()%1;
 			if(prob < probMutacion){
+				Random rand = new Random();
 				
 				puntos = new ArrayList<Integer>();
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
@@ -33,7 +31,6 @@ public class heuristic extends mutacion{
 			 		while(puntos.contains(nuevo)) nuevo = rand.nextInt(maxLong);
 			 		puntos.add(nuevo);
 			 	}
-			 
 			 	
 			 	//Genera las permutaciones
 				ArrayList<ArrayList<Integer>> permut = new ArrayList<ArrayList<Integer>>();

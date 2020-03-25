@@ -19,6 +19,9 @@ import seleccion.*;
 
 public class manager {
 
+	private int [] mejores= {50, 224416, 388214, 1818146};
+	private int valorMejor;
+	private int mejorPos;
 	private List<observer> observers;
 	private algoritmoSeleccion algSel;
 	private algoritmoCruce algCruce;
@@ -46,6 +49,7 @@ public class manager {
 		iniciarDatos();
 	}
 	public void iniciarDatos() {
+		mejorPos=0;
 		probElite=0.05;
 		generation=0;
 		probCruc=0.6;
@@ -85,7 +89,7 @@ public class manager {
 		}
 		
 		for(int i=0; i < observers.size(); i++) {
-			observers.get(i).onFinished( best, bestGen, average, bestVars);
+			observers.get(i).onFinished( best, bestGen, average, bestVars, valorMejor, mejorPos);
 		}
 	}
 	private void desadaptar() {
@@ -115,6 +119,7 @@ public class manager {
 		bestGen[1][generation]=poblacion.getBest();
 		if(generation==0 || funcion.best(bestGen[1][generation], best[1][generation-1])) {
 			best[1][generation]=bestGen[1][generation];
+			mejorPos=generation;
 			bestVars.clear();
 			bestVars.add((int) best[1][generation]);
 			individuo mejor=poblacion.getMejorInd();
@@ -238,6 +243,20 @@ public class manager {
 					load(in, distancia, tam);
 					load(in, flujo, tam);
 					funcion.cargarDatos(distancia, flujo, tam);
+					if(fileName=="ajuste.txt") {
+						valorMejor=mejores[0];
+					}if(fileName=="datos12.txt") {
+						valorMejor=mejores[1];
+					}
+					else if(fileName=="datos15.txt") {
+						valorMejor=mejores[2];
+					}
+					else if(fileName=="datos30.txt") {
+						valorMejor=mejores[3];
+					}
+					else {
+						valorMejor=0;
+					}
 				}
 				else
 				{
