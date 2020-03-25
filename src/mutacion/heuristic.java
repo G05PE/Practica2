@@ -9,7 +9,7 @@ import poblacion.poblacion;
 
 public class heuristic extends mutacion{
 
-	ArrayList<Integer> puntos = new ArrayList<Integer>();
+	ArrayList<Integer> puntos;
 
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
@@ -20,6 +20,7 @@ public class heuristic extends mutacion{
 		for(int i = 0; i < poblacion.getSize(); i++) {
 			if(prob < probMutacion){
 				
+				puntos = new ArrayList<Integer>();
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
 				
 				//Elegimos el numero de elementos puntos permutar (Recomiendan entre 2 y 3)
@@ -39,11 +40,12 @@ public class heuristic extends mutacion{
 			 	permut = permut(puntos);
 			 	
 			 	individuo mutado = new individuo();
+			 	int act;
 			 	
 			 	for(int p = 0; p < permut.size(); p++) {
 			 		mutado = poblacion.getIndividuo(i);
 			 		for(int q = 0; q < puntos.size(); q++) {
-			 			int act = permut.get(p).get(q);
+			 			act = permut.get(p).get(q);
 			 			mutado.setGen(puntos.get(q), mutado.getCromosomaAt(act));
 			 		}
 			 		
