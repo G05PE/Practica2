@@ -3,7 +3,6 @@ package mutacion;
 import java.util.ArrayList;
 import java.util.Random;
 
-import genetica.gen;
 import poblacion.individuo;
 import poblacion.poblacion;
 
