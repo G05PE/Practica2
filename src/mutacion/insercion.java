@@ -28,24 +28,25 @@ public class insercion extends mutacion{
 				
 				//Escogemos las n posiciones y mutamos
 			 	for(int j = 0; j < n; j++) {
-			 		int origen = rand.nextInt(maxLong);			 		
-			 		int destino = rand.nextInt(maxLong);
-			 		while(destino == origen) destino = rand.nextInt(maxLong);
+			 		int var1 = rand.nextInt(maxLong);			 		
+			 		int var2 = rand.nextInt(maxLong);
+			 		while(var2 == var1) var2 = rand.nextInt(maxLong);
 			 		
-			 		//Movemos las posiciones entre origen y destino
-			 		gen aux = mutado.getCromosomaAt(origen);
-			 		if(origen < destino) {
-			 			for(int u = origen + 1; u <= destino; u++) {
+			 		//Movemos las posiciones entre var1 y var2
+			 		gen aux = new gen();
+			 		aux = mutado.getCromosomaAt(var1);
+			 		
+			 		if(var1 < var2) {
+			 			for(int u = var1 + 1; u <= var2; u++)
 				 			mutado.setGen(u-1, mutado.getCromosomaAt(u));
-				 		}			 			
 			 		}
 			 		else {
-			 			for(int u = origen -1; u >= destino; u--) {
+			 			for(int u = var1 -1; u >= var2; u--) {
 				 			mutado.setGen(u+1, mutado.getCromosomaAt(u));
 				 		}			 			
 			 			
-			 			//Finalmente insertamos el origen guardado en el destino
-			 			mutado.setGen(destino, aux);
+			 			//Finalmente insertamos el var1 guardado en el var2
+			 			mutado.setGen(var2, aux);
 			 		}
 			 		
 			 	}

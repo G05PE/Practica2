@@ -19,6 +19,7 @@ public class heuristic extends mutacion{
 				Random rand = new Random();
 				
 				puntos = new ArrayList<Integer>();
+				
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
 				
 				//Elegimos el numero de elementos puntos permutar (Recomiendan entre 2 y 3)

@@ -7,32 +7,32 @@ import poblacion.poblacion;
 
 public class erx extends algoritmoCruce {
 
-	ArrayList<ArrayList<Integer>> tablaGenes = new ArrayList<ArrayList<Integer>>();
+	ArrayList<ArrayList<Integer>> tablaGenes;
 	
 	@Override
 	public poblacion cruzar(poblacion seleccionados, double prob) {
 		ini(prob, seleccionados);
 		seleccionaReproductores();	
-		cruzaReproductores();
+		creaDescendientes();
 		
 		return getDescendientes();
 	}
 	
 	
-	private void cruzaReproductores() {
-				
-		//Inicializa los hijos
-		for(int i = 0; i < getReproductoresSize() - 1; i+=2) {
-			individuo padre1 = new individuo();
-			individuo padre2 = new individuo();
-					
+	private void creaDescendientes() {
+		for(int i = 0; i < getReproductoresSize(); i+=2) {
+			individuo padre1 = getReproductorAt(i);
+			individuo padre2 = getReproductorAt(i+1);
+
+			tablaGenes = new ArrayList<ArrayList<Integer>>();
 			creaTabla(padre1, padre2);
+			
+			System.out.println();
 		}
 	}
 
 
-	private void creaTabla(individuo padre1, individuo padre2) {
-		
+	private void creaTabla(individuo padre1, individuo padre2) {	
 		int size = padre1.getSizeCromosoma();
 		
 		//Añadimos los valores diferentes a la tabla
