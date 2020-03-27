@@ -12,21 +12,21 @@ public class heuristic extends mutacion{
 
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
-				
-		for(int i = 0; i < poblacion.getSize(); i++) {
-			double prob = Math.random()%1;
+		
+		Random rand = new Random();
+		double prob = Math.random()%1;
+		
+		for(int i = 0; i < poblacion.getSize(); i++) {	
 			if(prob < probMutacion){
-				Random rand = new Random();
-				
-				puntos = new ArrayList<Integer>();
-				
+	
+				puntos = new ArrayList<Integer>();				
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
+				individuo mutado = new individuo();
 				
-				//Elegimos el numero de elementos puntos permutar (Recomiendan entre 2 y 3)
+				//Elegimos el numero de elementos puntos permutar y escogemos las posiciones 
 				int n = 3;
 				if(Math.random()%1 <= 0.5) n = 2;
-				
-				//Escogemos las posiciones y las añadimos puntos la lista
+			
 			 	for(int j = 0; j < n; j++) {
 			 		int nuevo = rand.nextInt(maxLong);
 			 		while(puntos.contains(nuevo)) nuevo = rand.nextInt(maxLong);
@@ -37,23 +37,37 @@ public class heuristic extends mutacion{
 				ArrayList<ArrayList<Integer>> permut = new ArrayList<ArrayList<Integer>>();
 			 	permut = permut(puntos);
 			 	
-			 	individuo mutado = new individuo();
-			 	int act;
 			 	
-			 	for(int p = 0; p < permut.size(); p++) {
+			 	for(int j = 0; j < permut.size(); j++) {
 			 		mutado = poblacion.getIndividuo(i);
-			 		for(int q = 0; q < puntos.size(); q++) {
-			 			act = permut.get(p).get(q);
-			 			mutado.setGen(puntos.get(q), mutado.getCromosomaAt(act));
+			 		for(int p = 0; p < puntos.size(); p++) {
+			 			int act = permut.get(j).get(p);
+			 			mutado.setGen(puntos.get(p), mutado.getCromosomaAt(act));
 			 		}
 			 		
-			 		mutado.calcularFitness();
-			 		if(poblacion.getIndividuo(i).getFitness() < mutado.getFitness()) poblacion.setIndividuoAt(i, mutado);
-			 	}			 	
+			 		//Descarta las combinaciones que duplican valores
+			 		if(!tieneRepetidos(mutado)) {
+				 		mutado.calcularFitness();
+				 		if(poblacion.getIndividuo(i).getFitness() < mutado.getFitness()) poblacion.setIndividuoAt(i, mutado);
+			 		}
+			 	}	
 			}
 		}
 	}
 	
+
+	//Se asegura de que no tiene genes repetidos
+	private boolean tieneRepetidos(individuo mutado) {
+
+		for(int i = 0; i < mutado.getSizeCromosoma(); i++){
+			for(int j = i+1; j < mutado.getSizeCromosoma(); j++) {
+				if(mutado.getCromosomaAt(i) == mutado.getCromosomaAt(j)) return true;
+			}
+		}
+		
+		return false;
+	}
+
 
 	private ArrayList<ArrayList<Integer>> permut(ArrayList<Integer> puntos) {
 

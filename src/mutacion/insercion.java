@@ -8,7 +8,6 @@ import poblacion.poblacion;
 
 public class insercion extends mutacion{
 
-	
 	individuo mutado = new individuo();
 
 	@Override
@@ -20,7 +19,6 @@ public class insercion extends mutacion{
 		for(int i = 0; i < poblacion.getSize(); i++) {
 			if(prob < probMutacion){
 				mutado = poblacion.getIndividuo(i);
-				
 				int maxLong = mutado.getSizeCromosoma();
 				
 				//Escogemos el numero de elementos mutados

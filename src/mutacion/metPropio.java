@@ -8,19 +8,23 @@ import poblacion.poblacion;
 
 public class metPropio extends mutacion{
 
+	private boolean [] bMut;
 
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
 		int var1, var2;
-		int tamCromosoma=poblacion.getIndividuo(0).getSizeCromosoma();
-		double valor;
 		
 		for(int i = 0; i < poblacion.getSize(); i++) {
-			valor = Math.random()%1;
+			double valor = Math.random()%1;	
 			if(valor < probMutacion) {
 				Random rand=new Random();
+				int tamCromosoma = poblacion.getIndividuo(i).getSizeCromosoma();
+				
 				var1 = rand.nextInt(tamCromosoma);
 				var2 = rand.nextInt(tamCromosoma);
+				
+				bMut = new boolean[tamCromosoma];
+
 				
 				while(var1 == var2)
 					var2 = rand.nextInt(tamCromosoma);
