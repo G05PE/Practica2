@@ -19,24 +19,24 @@ public class heuristic extends mutacion{
 		for(int i = 0; i < poblacion.getSize(); i++) {	
 			if(prob < probMutacion){
 	
-				puntos = new ArrayList<Integer>();				
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
+				puntos = new ArrayList<Integer>();				
 				individuo mutado = new individuo();
 				
 				//Elegimos el numero de elementos puntos permutar y escogemos las posiciones 
 				int n = 3;
 				if(Math.random()%1 <= 0.5) n = 2;
 			
+				//Fuerza a que los puntos sean diferentes
 			 	for(int j = 0; j < n; j++) {
 			 		int nuevo = rand.nextInt(maxLong);
 			 		while(puntos.contains(nuevo)) nuevo = rand.nextInt(maxLong);
 			 		puntos.add(nuevo);
 			 	}
 			 	
-			 	//Genera las permutaciones
+			 	//Genera las permutaciones y las prueba
 				ArrayList<ArrayList<Integer>> permut = new ArrayList<ArrayList<Integer>>();
 			 	permut = permut(puntos);
-			 	
 			 	
 			 	for(int j = 0; j < permut.size(); j++) {
 			 		mutado = poblacion.getIndividuo(i);
@@ -61,7 +61,7 @@ public class heuristic extends mutacion{
 
 		for(int i = 0; i < mutado.getSizeCromosoma(); i++){
 			for(int j = i+1; j < mutado.getSizeCromosoma(); j++) {
-				if(mutado.getCromosomaAt(i) == mutado.getCromosomaAt(j)) return true;
+				if(mutado.getCromosomaAt(i).getGenotipo() == mutado.getCromosomaAt(j).getGenotipo()) return true;
 			}
 		}
 		
