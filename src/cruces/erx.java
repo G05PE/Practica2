@@ -8,8 +8,8 @@ import poblacion.poblacion;
 public class erx extends algoritmoCruce {
 
 	ArrayList<ArrayList<Integer>> tablaGenes;
-//	private boolean [] h1;
-//	private boolean [] h2;
+	private boolean [] h1;
+	private boolean [] h2;
 
 	@Override
 	public poblacion cruzar(poblacion seleccionados, double prob) {
@@ -26,19 +26,47 @@ public class erx extends algoritmoCruce {
 			int tam = getReproductorAt(i).getSizeCromosoma();
 			individuo padre1 = getReproductorAt(i);
 			individuo padre2 = getReproductorAt(i+1);
-//			individuo hijo1 = new individuo(padre1);
-//			individuo hijo2 = new individuo(padre2);			
-//			h1=new boolean[tam];
-//			h2=new boolean[tam];
-//			inicializarArray(h1, tam);
-//			inicializarArray(h2, tam);
+			individuo hijo1 = new individuo(padre1);
+			individuo hijo2 = new individuo(padre2);			
+			h1=new boolean[tam];
+			h2=new boolean[tam];
+			inicializarArray(h1, tam);
+			inicializarArray(h2, tam);
 
+			
 			tablaGenes = new ArrayList<ArrayList<Integer>>();
 			creaTabla(padre1, padre2, tam);
 
-			System.out.println();
+			//Elegimos el primer gen
+			if(Math.random()%1 < 0.5) {
+				hijo1.setGen(0, padre1.getCromosomaAt(0));
+				hijo2.setGen(0, padre2.getCromosomaAt(0));
+			}
+			else {
+				hijo1.setGen(0, padre2.getCromosomaAt(1));
+				hijo2.setGen(0, padre1.getCromosomaAt(0));
+			}
+			
+			//Resto de genes
+			int cont1 = 0, cont2 = 0;
+			for(int j = 1; j < tam; j++) {
+				//Busca los contiguos y coge el que menos conexiones tenga
+				ArrayList<Integer> contiguos = buscaContiguos();
+				
+			}
+			for(int j = 1; j < tam; j++) {
+				//Busca los contiguos y coge el que menos conexiones tenga
+				ArrayList<Integer> contiguos = buscaContiguos();
+			}
+			
+			
 		}
 	}
+
+	private ArrayList<Integer> buscaContiguos(int indice) {
+
+	}
+
 
 	private void creaTabla(individuo padre1, individuo padre2, int size) {	
 
@@ -75,7 +103,6 @@ public class erx extends algoritmoCruce {
 				
 				//Manera cutre pero no me funciona el modulo
 				if(anterior == -1)anterior = size-1;
-				
 				if(siguiente == size) siguiente = 0;
 				else if(siguiente == size + 1) {
 					siguiente = 1;
