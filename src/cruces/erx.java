@@ -51,11 +51,20 @@ public class erx extends algoritmoCruce {
 			int cont1 = 0, cont2 = 0;
 			for(int j = 1; j < tam; j++) {
 				//Busca los contiguos y coge el que menos conexiones tenga
-				ArrayList<Integer> contiguos = buscaContiguos();
+				ArrayList<ArrayList<Integer>> contiguos = buscaContiguos();
+				if(contiguos.size() < contiguos.size())
+					//Mete el primero
+					hijo1.setGen(j, gen);
+				else if ((contiguos.size() > contiguos.get(1).size()));
+					//Mete el segundo
+					hijo1.setGen(j, contiguos.get(1));
+				else {
+					if(Math.random()%1 <= 0.5)//Mete el primero
+					else //Mete el segundo
+				}
 				
 			}
 			for(int j = 1; j < tam; j++) {
-				//Busca los contiguos y coge el que menos conexiones tenga
 				ArrayList<Integer> contiguos = buscaContiguos();
 			}
 			
@@ -63,8 +72,8 @@ public class erx extends algoritmoCruce {
 		}
 	}
 
-	private ArrayList<Integer> buscaContiguos(int indice) {
-
+	private ArrayList<ArrayList<Integer>> buscaContiguos() {
+		
 	}
 
 
