@@ -8,7 +8,7 @@ import poblacion.poblacion;
 
 public class heuristic extends mutacion{
 
-	ArrayList<Integer> puntos;
+	private ArrayList<Integer> puntos;
 
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
