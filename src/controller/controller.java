@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.File;
-
 import model.manager;
 import model.observer;
 
