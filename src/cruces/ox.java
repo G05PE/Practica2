@@ -17,8 +17,8 @@ public class ox extends algoritmoCruce {
 	}
 
 	private void creaDescendientes() {
-		Random rand=new Random();
 		int tamCromosoma=getReproductorAt(0).getSizeCromosoma();
+		Random rand=new Random();
 		int punto1=rand.nextInt(tamCromosoma);
 		int punto2=rand.nextInt(tamCromosoma);
 		while(punto1 == punto2) {
@@ -29,6 +29,7 @@ public class ox extends algoritmoCruce {
 			punto1=punto2;
 			punto2=aux;
 		}
+		
 		for(int i=0; i < getReproductoresSize(); i+=2) {
 			individuo padre1=getReproductorAt(i);
 			individuo padre2=getReproductorAt(i+1);
@@ -41,6 +42,20 @@ public class ox extends algoritmoCruce {
 			setDescendienteAt(i, hijo1);
 			setDescendienteAt(i+1, hijo2);
 		}
+	}
+
+	private int createPunto(int punto2, int tam) {
+		Random rand=new Random();
+		int punto1=rand.nextInt(tam);
+		while(punto1 == punto2) {
+			punto2=rand.nextInt(tam);
+		}
+		if(punto1 > punto2) {
+			int aux=punto1;
+			punto1=punto2;
+			punto2=aux;
+		}
+		return punto1;
 	}
 
 	private void setGenes(individuo hijo, individuo padre, int punto1, int punto2) {

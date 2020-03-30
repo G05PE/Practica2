@@ -8,17 +8,16 @@ import poblacion.poblacion;
 
 public class insercion extends mutacion{
 
-	
-	individuo mutado = new individuo();
-
 	@Override
 	public void mutar(poblacion poblacion, double probMutacion) {
 		
 		Random rand = new Random();
-		double prob = Math.random()%1;
 			
 		for(int i = 0; i < poblacion.getSize(); i++) {
+			double prob = Math.random()%1;
+			
 			if(prob < probMutacion){
+				individuo mutado = new individuo();
 				mutado = poblacion.getIndividuo(i);
 				
 				int maxLong = mutado.getSizeCromosoma();
@@ -33,21 +32,20 @@ public class insercion extends mutacion{
 			 		while(destino == origen) destino = rand.nextInt(maxLong);
 			 		
 			 		//Movemos las posiciones entre origen y destino
-			 		gen aux = mutado.getCromosomaAt(origen);
+			 		gen aux = new gen();
+			 		aux = mutado.getCromosomaAt(origen);
+			 		
 			 		if(origen < destino) {
-			 			for(int u = origen + 1; u <= destino; u++) {
+			 			for(int u = origen + 1; u <= destino; u++)
 				 			mutado.setGen(u-1, mutado.getCromosomaAt(u));
-				 		}			 			
 			 		}
 			 		else {
-			 			for(int u = origen -1; u >= destino; u--) {
-				 			mutado.setGen(u+1, mutado.getCromosomaAt(u));
-				 		}			 			
-			 			
-			 			//Finalmente insertamos el origen guardado en el destino
-			 			mutado.setGen(destino, aux);
+			 			for(int u = origen -1; u >= destino; u--) 
+				 			mutado.setGen(u+1, mutado.getCromosomaAt(u));			 			
 			 		}
 			 		
+			 		//Finalmente insertamos en el destino la posicion deseada
+			 		mutado.setGen(destino, aux);			 		
 			 	}
 			 	poblacion.setIndividuoAt(i, mutado);
 			}

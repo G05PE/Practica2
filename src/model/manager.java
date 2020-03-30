@@ -153,10 +153,10 @@ public class manager {
 			break;
 		case 4: algSel=new algoritmoTruncamiento();
 			break;
-		case 5: //algSel=new algoritmoRanking();
+		/*case 5: algSel=new algoritmoRanking();
 			break;
-		case 6: //Otro algoritmo
-			break;
+		case 6: algSel = new algotirmoOtro();
+			break;*/
 		}
 	}
 	public double[][] getBest() {
@@ -184,7 +184,7 @@ public class manager {
 			break;
 		case 1: algCruce = new ox();
 			break;
-		case 2:algCruce = new oxVariant();
+		case 2:algCruce = new oxPP();
 			break;
 		case 3: algCruce = new cx();
 			break;
@@ -207,7 +207,7 @@ public class manager {
 			break;
 		case 3: algMut=new heuristic();
 			break;
-		case 4: //Metodo propio
+		case 4: algMut = new metPropio();
 			break;
 		}
 	}

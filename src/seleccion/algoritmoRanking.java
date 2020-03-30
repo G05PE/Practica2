@@ -10,11 +10,8 @@ public class algoritmoRanking extends algoritmoSeleccion {
 
 	private double totalFitness;
 	private List<Double> fitnessIndiv;
-	
 	private List<Double> probSeleccion;
 
-	
-	
 	public algoritmoRanking(String name) {
 		super("ranking");
 		totalFitness=0;

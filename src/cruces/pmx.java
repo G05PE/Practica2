@@ -57,6 +57,7 @@ public class pmx extends algoritmoCruce {
 				hijo2.setGen(u, padre1.getCromosomaAt(u));
 			}
 			
+			
 			for(int j=0; j < var1; j++) {
 				for(int k=var1; k < var2; k++) {
 					if(hijo1.getCromosomaAt(j).getGenotipo()==hijo1.getCromosomaAt(k).getGenotipo()) {
@@ -78,6 +79,7 @@ public class pmx extends algoritmoCruce {
 					}
 				}
 			}
+			
 			
 			int cont1=var1, cont2=var1;
 			for(int j=0; j < tam; j++) {
