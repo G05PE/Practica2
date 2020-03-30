@@ -32,7 +32,7 @@ public class SetingsPanel extends JPanel implements observer{
 	private controller ctrl;
 	private String [] listaMut= {"Insertion", "Exchange", "Inversion",
 			 "Heuristic", "Método propio"};
-	private String [] listaCruz= {"PMX", "OX", "Variant of OX", "CX",
+	private String [] listaCruz= {"PMX", "OX", "OX-PP", "CX",
 			 "ERX", "Ordinal Coding","OwnCrossing"};
 	private String [] listaSelec= {"Roulette", "Determinist Tournament",
 			"Probabilistic Tournament","Stochastic", "Ranking", 
@@ -417,7 +417,7 @@ public class SetingsPanel extends JPanel implements observer{
 		case "OX":
 			ctrl.setCrossFunct(1);
 			break;
-		case "Variant of OX":
+		case "OX-PP":
 			ctrl.setCrossFunct(2);
 			break;
 		case "CX":

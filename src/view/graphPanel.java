@@ -53,8 +53,12 @@ public class graphPanel extends JPanel implements observer {
 		plot.addLinePlot("Mejor absoluto", best[0], best[1]);
 		plot.addLinePlot("Mejor generación", bestGen[0], bestGen[1]);
 		plot.addLinePlot("Media generación", average[0], average[1]);
-		fitness.setText("Valor buscado: "+mejorEsperado +" Fitness: " + bestVars.get(0)+" Pos: "+pos);
-		
+		if(mejorEsperado==0) {
+			fitness.setText("Valor buscado: ? Fitness: " + bestVars.get(0)+" Pos: "+pos);
+		}
+		else {
+			fitness.setText("Valor buscado: "+mejorEsperado +" Fitness: " + bestVars.get(0)+" Pos: "+pos);
+		}
 		String tVariables="Variables:";
 		for(int i=1; i < bestVars.size(); i++) {
 			tVariables+=" "+bestVars.get(i);
