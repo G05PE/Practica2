@@ -1,78 +1,92 @@
 package seleccion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.funcion;
+import poblacion.individuo;
 import poblacion.poblacion;
 
 public class algoritmoRanking extends algoritmoSeleccion {
 
-	private double totalFitness;
-	private List<Double> fitnessIndiv;
-	private List<Double> probSeleccion;
-
-	public algoritmoRanking(String name) {
+	public algoritmoRanking() {
 		super("ranking");
-		totalFitness=0;
-		probSeleccion=new ArrayList<Double>();
 	}
 
 	@Override
 	public poblacion ini(poblacion p, funcion f) {
-		probSeleccion=new ArrayList<Double>();
 		iniSeleccionados(p);
 		seleccionar(p, f);
 		getSeleccionados().iniBest();
 		return getSeleccionados();
 	}
 
-		
-	private void calcularTotalFitness(poblacion p) {
-		for(int i=0; i < p.getSize(); i++) {
-			//fitnessIndiv[i] = p.getIndividuo(i).getFitness();
-			totalFitness += p.getIndividuo(i).getFitness();
-		}
-	}
-
 	@Override
 	public void seleccionar(poblacion p, funcion f) {
-	
-	}
-}
-
-
-
-/**PSEUDOCODIGO DEL PROFESOR*/
-/*
- * public Individual[] ranking(Individual[] initPop){
-	Individual[] sortedPop = SortIndividual.selectionSort(initPop);
-	Individual[] futureParents = new Individual[sortedPop.size()]
-	
-	futureParents[0] = sortedPop[0];
-	futureParents[1] = sortedPop[1];
-	int numOfParents = 2;
-
-	double[] fitnessSegments = rankPopulation();
-	double entireSegment = fitnessSegments[fitnessSegments.size() - 1]
-
-	while(numOfParents < futureParents.size()){
-		double x = (double)(Math.random()*entireSegment);
-		if(x <= fitnessSegments[0]){
-			futureParents[numOfParents] = sortedPop[0];
-			numOfParents++;
+		//Ordenamos por fitness
+		ordenaFitness(p);
+		
+		//Array para futuros padres, seleccionamos los dos primeros
+		int papisSize = 2;
+		addSeleccionado(new individuo(p.getIndividuo(0)));
+		addSeleccionado(new individuo(p.getIndividuo(1)));
+		
+		double[] segments = ranking(p);
+		double ultimo = segments[segments.length - 1];
+		
+		//Bucle para rellenar todas las posiciones deseadas
+		while(papisSize < p.getSize()) {
+			double rand = (double)(Math.random() * ultimo);
+			if(rand <= segments[0]) {
+				addSeleccionado(new individuo(p.getIndividuo(0)));
+				papisSize++;
+			}
+			else 
+				for(int i = 1; i < papisSize; i++) {
+					if(rand > segments[i-1] && rand <= segments[i]) {
+						addSeleccionado(new individuo(p.getIndividuo(i)));
+						papisSize++;
+					}
+			}
 		}
-		else{
-			for(int i = 1; i < futureParents.size(); i++){
-				if(x > fitnessSegments[i-1] && x <= fitnessSegments[i]){
-					futureParents[numOfParents] = sortedPop[i];
-					numOfParents++;
+	}
+		
+	private double[] ranking(poblacion p) {
+		double[] segments = new double[p.getSize()];
+		double beta = calcBeta(p);
+				
+		for(int i = 0; i < segments.length; i++) {
+			double prob = (double) i/p.getSize();
+			prob = prob * 2 * (beta - 1);
+			prob = beta - prob;
+			prob = (double) prob*((double)1/p.getSize());
+			
+			if(i != 0) segments[i]	= segments[i-1] + prob;
+			else segments[i] = prob;
+		}
+		return segments;
+	}
+
+	private double calcBeta(poblacion p) {
+		double best = 0;
+		double media = 0;
+		for(int i = 0; i < p.getSize(); i++) {
+			media += p.getIndividuo(i).getFitness();
+			if(p.getIndividuo(i).getFitness() > best) best = p.getIndividuo(i).getFitness();
+		}
+		media /= p.getSize();
+		
+		return best/media;
+	}
+
+	private void ordenaFitness(poblacion p) {
+		for(int i = 0; i < p.getSize(); i++) {
+			for(int j = 0; j < p.getSize(); j++) {
+				if(p.getIndividuo(j).getFitness() > p.getIndividuo(i).getFitness()) {
+					individuo aux = new individuo(p.getIndividuo(i));
+					p.setIndividuoAt(i, p.getIndividuo(j));
+					p.setIndividuoAt(j, aux);
 				}
 			}
-			return futureParents;
 		}
 	}
+	
+	
 }
-
-*/
- 
