@@ -17,7 +17,7 @@ public class erx extends algoritmoCruce {
 		ini(prob, seleccionados);
 		seleccionaReproductores();	
 		creaDescendientes();
-
+		
 		return getDescendientes();
 	}
 
@@ -30,15 +30,14 @@ public class erx extends algoritmoCruce {
 			individuo hijo1 = new individuo(padre1);
 			individuo hijo2 = new individuo(padre2);			
 			
+			tablaGenes = new ArrayList<ArrayList<gen>>();
+			creaTabla(padre1, padre2, tam);
+			
 			//Marcaje
 			h1=new boolean[tam];
 			h2=new boolean[tam];
 			inicializarArray(h1, tam);
 			inicializarArray(h2, tam);
-			
-			tablaGenes = new ArrayList<ArrayList<gen>>();
-			creaTabla(padre1, padre2, tam);
-			
 			
 			if(Math.random()%1 < 0.5) {				
 				hijo1.setGen(0, padre1.getCromosomaAt(0));
@@ -49,33 +48,38 @@ public class erx extends algoritmoCruce {
 				hijo2.setGen(0, padre1.getCromosomaAt(0));
 			}
 			
-			h1[0] = false;
-			h2[0] = false;
 		
 			for(int j = 1; j < tam; j++) {
-				gen nuevo1 = buscaSiguienteGen(hijo1, j - 1);
-				hijo1.setGen(i, nuevo1);
+				gen nuevo1 = new gen(buscaSiguienteGen(padre1, j - 1, 1));
+				hijo1.setGen(j, nuevo1);
 				marca(hijo1, nuevo1, 1);
 				
-				gen nuevo2 = buscaSiguienteGen(hijo2, j - 1);
-				hijo2.setGen(i, nuevo2);
-				marca(hijo2, nuevo2, 2);
+				/*gen nuevo2 = new gen(buscaSiguienteGen(padre2, j - 1, 2));
+				hijo2.setGen(j, nuevo2);
+				marca(hijo2, nuevo2, 2);*/
 			}
+			
+			setDescendienteAt(i, hijo1);
+			setDescendienteAt(i+1, hijo2);
 		}
 	}
-
-
+	
 	private void marca(individuo hijo, gen nuevo, int numHijo) {
 		for(int i = 0; i < hijo.getSizeCromosoma(); i++) {
 			if(hijo.getCromosomaAt(i) == nuevo) {
 				if(numHijo == 1) h1[i] = false;
-				else h2[i] = false;
+				else if (numHijo == 2) h2[i] = false;
 			}
 		}
 	}
+	
+	private void inicializarArray(boolean[] h, int tam) {
+		for(int i = 0; i < tam; i++) {
+			h[i]=true;
+		}
+	}
 
-
-	private gen buscaSiguienteGen(individuo hijo, int cont) {
+	private gen buscaSiguienteGen(individuo padre, int cont, int numHijo) {
 		
 		//Busco los genes contiguos al actual
 		ArrayList<gen> contiguos = new ArrayList<gen>();
@@ -83,13 +87,14 @@ public class erx extends algoritmoCruce {
 		
 		boolean found = false;
 		for(int i = 0; i < tablaGenes.size() && !found; i++) {
-			if(tablaGenes.get(i).get(0) == hijo.getCromosomaAt(cont)) {
+			if(tablaGenes.get(i).get(0) == padre.getCromosomaAt(cont)) {
 				for(int j = 1; j < tablaGenes.get(i).size(); j++) {
 					contiguos.add(tablaGenes.get(i).get(j));
 				}
 				found = true;
 			}
 		}
+		
 		//Mete el size de los genes en contSize
 		for(int i = 0; i < contiguos.size(); i++) {
 			for(int j = 0; j < tablaGenes.size(); j++) {
@@ -101,18 +106,36 @@ public class erx extends algoritmoCruce {
 		
 		
 		//Busco el mejor
-		int longMin = hijo.getSizeCromosoma();
+		int i = 0, minSize = contSize.get(0);	
 		gen ret = new gen();
-		
-		for(int i = 0; i < contiguos.size(); i++) {
-			if(contSize.get(i) < longMin) {
-				longMin = contSize.get(i);
-				ret = contiguos.get(i);
+
+		//Devuelve el priemero no utilizado (tiene que tener al menos un contiguo)
+		for(int j = 0; i < 1; j++) {
+			int pos = buscaPosHijo(padre, contiguos.get(j)); //Posicion en el array hijo de contiguos.get(i);
+			if((numHijo == 1 && h1[pos]) || (numHijo == 2 && h2[pos])) {
+				ret = new gen(contiguos.get(i));	
+				minSize = contSize.get(i);
+				i++;
 			}
-			else if (contSize.get(i) == longMin) {
-				if(Math.random()%1 >= 0.5) { //Elección parcial entre los valores con la misma longitud
-					longMin = contSize.get(i);
-					ret = contiguos.get(i);
+			j++;
+		}
+		
+		
+		//Comprueba si existen posbilidades mejores
+		for(; i < contSize.size(); i++) {
+			int pos = buscaPosHijo(padre, contiguos.get(i));
+			
+			//Se comprueba siempre que el nuevo no se haya usado
+			if((numHijo == 1 && h1[pos]) || (numHijo == 2 && h2[pos])) {
+				if(minSize > contSize.get(i)) {
+					minSize = contSize.get(i);
+					ret = new gen(contiguos.get(i));
+				}
+				else if (contSize.get(i) == minSize) {
+					if(Math.random()%1 >= 0.5) { //Elección parcial entre los valores con la misma longitud
+						minSize = contSize.get(i);
+						ret = new gen(contiguos.get(i));
+					}	
 				}
 			}
 		}
@@ -120,7 +143,16 @@ public class erx extends algoritmoCruce {
 	}
 
 
-	@SuppressWarnings("unlikely-arg-type")
+	private int buscaPosHijo(individuo padre, gen buscado) {
+		for(int i = 0; i < padre.getSizeCromosoma(); i++) {
+			if(padre.getCromosomaAt(i).getGenotipo() == buscado.getGenotipo()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+
 	private void creaTabla(individuo padre1, individuo padre2, int size) {	
 
 		//Añadimos los valores diferentes a la tabla
@@ -169,12 +201,6 @@ public class erx extends algoritmoCruce {
 				contiguos.add(padre1.getCromosomaAt(siguiente));
 				tablaGenes.add(contiguos);
 			}		
-		}
-	}
-
-	private void inicializarArray(boolean[] h, int tam) {
-		for(int i = 0; i < tam; i++) {
-			h[i]=true;
 		}
 	}
 }
