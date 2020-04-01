@@ -30,8 +30,9 @@ public class erx extends algoritmoCruce {
 			individuo hijo1 = new individuo(padre1);
 			individuo hijo2 = new individuo(padre2);			
 			
-			tablaGenes = new ArrayList<ArrayList<gen>>();
-			creaTabla(padre1, padre2, tam);
+			tablaGenes = new ArrayList<ArrayList<gen>>();			
+			creaTabla(padre1, tam);
+			creaTabla(padre2, tam);
 			
 			//Marcaje
 			h1=new boolean[tam];
@@ -153,16 +154,15 @@ public class erx extends algoritmoCruce {
 	}
 
 
-	private void creaTabla(individuo padre1, individuo padre2, int size) {	
-
-		//Añadimos los valores diferentes a la tabla
+	private void creaTabla(individuo padre, int size) {	
+	
 		for(int i = 0; i < size; i++) {
 			boolean existe = false;
 			int pos = 0;
 
 			//Busca cada valor en la tabla
 			for(int j = 0; j < tablaGenes.size() && !existe; j++) {
-				if(tablaGenes.get(j).get(0).getGenotipo() == padre1.getCromosomaAt(i).getGenotipo()) { 
+				if(tablaGenes.get(j).get(0).getGenotipo() == padre.getCromosomaAt(i).getGenotipo()) { 
 					existe = true;
 					pos = j;
 				}
@@ -171,19 +171,29 @@ public class erx extends algoritmoCruce {
 			//Si existe se comprueban los contiguos
 			//Si no existe se genera uno nuevo con los nuevos contiguos
 			if(existe) {
-				ArrayList<gen> tabla =  new ArrayList<gen>();
-				tabla = tablaGenes.get(pos);
-
-				for(int j = 0; j < tabla.size(); j++) {
-					if(!tabla.contains(padre1.getCromosomaAt((i-1)%size).getGenotipo())) 
-						tablaGenes.get(pos).add(padre1.getCromosomaAt(i));
-					if(!tabla.contains(padre1.getCromosomaAt((i+1)%size).getGenotipo())) 
-						tablaGenes.get(pos).add(padre1.getCromosomaAt(i));
+				ArrayList<gen> listaGenes =  new ArrayList<gen>();
+				listaGenes= tablaGenes.get(pos);
+				
+				gen anterior = padre.getCromosomaAt(((i-1) < 0)?(i - 1 +size):(i-1)%size);
+				gen siguiente = padre.getCromosomaAt((i+1)%size);
+				
+				boolean bAnt = false, bSig = false;
+				for(int k = 0; k < listaGenes.size(); k++) {
+					if(listaGenes.get(k).getGenotipo() == anterior.getGenotipo()) {
+						bAnt = true;
+					}
+					if(listaGenes.get(k).getGenotipo() == siguiente.getGenotipo()) {
+						bSig = true;
+					}
 				}
+				
+				if(!bAnt) tablaGenes.get(pos).add(anterior);
+				if(!bSig) tablaGenes.get(pos).add(siguiente);
+			
 			}
 			else {
 				
-				int anterior = (i-1);
+				int anterior = ((i-1) < 0)?(i - 1 +size):(i-1)%size;
 				int siguiente = (i+1);
 				
 				//Manera cutre pero no me funciona el modulo
@@ -196,9 +206,9 @@ public class erx extends algoritmoCruce {
 
 				
 				ArrayList<gen> contiguos = new ArrayList<gen>();
-				contiguos.add(padre1.getCromosomaAt(i));
-				contiguos.add(padre1.getCromosomaAt(anterior));
-				contiguos.add(padre1.getCromosomaAt(siguiente));
+				contiguos.add(padre.getCromosomaAt(i));
+				contiguos.add(padre.getCromosomaAt(anterior));
+				contiguos.add(padre.getCromosomaAt(siguiente));
 				tablaGenes.add(contiguos);
 			}		
 		}
