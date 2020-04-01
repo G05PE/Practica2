@@ -22,8 +22,8 @@ public class heuristic extends mutacion{
 	
 				int maxLong = poblacion.getIndividuo(i).getSizeCromosoma();
 				puntos = new ArrayList<Integer>();				
-				individuo mutado = new individuo();
-				
+				individuo mutado = new individuo(poblacion.getIndividuo(i));
+			 	
 				//Elegimos el numero de elementos puntos permutar y escogemos las posiciones 
 				int n = 3;
 				if(Math.random()%1 <= 0.5) n = 2;
@@ -36,40 +36,28 @@ public class heuristic extends mutacion{
 			 	}
 			 	
 			 	//Genera las permutaciones y las prueba
-			 	mutado =  poblacion.getIndividuo(i);
 				ArrayList<ArrayList<Integer>> permut = new ArrayList<ArrayList<Integer>>();
 			 	permut = permut(puntos);
 			 	
 			 	for(int j = 1; j < permut.size(); j++) {
 			 		for(int p = 0; p < puntos.size(); p++) {
-			 			int posAct = permut.get(j).get(p);
-			 			int pos = puntos.get(p);
-			 			gen genAct= poblacion.getIndividuo(i).getCromosomaAt(posAct);
-			 			mutado.setGen(pos, genAct);
+			 			gen genAct= poblacion.getIndividuo(i).getCromosomaAt(permut.get(j).get(p));
+			 			mutado.setGen(puntos.get(p), genAct);
+			 		}
+			 		
+			 		mutado.calcularFitness();
+			 		double fitnessNormal = poblacion.getIndividuo(i).getFitness();
+			 		double fitnessMutado = mutado.getFitness();
+			 		
+			 		if(fitnessNormal < fitnessMutado) {
+			 			poblacion.setIndividuoAt(i, mutado);
 			 		}
 			 	}	
-			 	
-			 	
-			 	mutado.setFitness(50);
-		 		if(poblacion.getIndividuo(i).getFitness() < mutado.getFitness())
-		 			poblacion.setIndividuoAt(i, mutado);
+			 		 
 			}
 		}
 	}
 	
-
-//	Se asegura de que no tiene genes repetidos
-//	private boolean tieneRepetidos(individuo mutado) {
-//
-//		for(int i = 0; i < mutado.getSizeCromosoma(); i++){
-//			for(int j = i+1; j < mutado.getSizeCromosoma(); j++) {
-//				if(mutado.getCromosomaAt(i).getGenotipo() == mutado.getCromosomaAt(j).getGenotipo()) return true;
-//			}
-//		}
-//		
-//		return false;
-//	}
-
 
 	private ArrayList<ArrayList<Integer>> permut(ArrayList<Integer> puntos) {
 

@@ -18,7 +18,7 @@ public class metPropio extends mutacion{
 			
 			if(valor < probMutacion) {
 				
-				individuo mutado = poblacion.getIndividuo(i);
+				individuo mutado = new individuo(poblacion.getIndividuo(i));
 				int tamCromosoma = poblacion.getIndividuo(i).getSizeCromosoma();
 				
 				//Tomamos las posiciones necesarias y aseguramos que sean diferentes

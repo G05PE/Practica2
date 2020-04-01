@@ -153,10 +153,10 @@ public class manager {
 			break;
 		case 4: algSel=new algoritmoTruncamiento();
 			break;
-		/*case 5: algSel=new algoritmoRanking();
+		case 5: algSel=new algoritmoRanking();
 			break;
 		case 6: algSel = new algotirmoOtro();
-			break;*/
+			break;
 		}
 	}
 	public double[][] getBest() {
