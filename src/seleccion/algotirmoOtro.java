@@ -1,59 +1,41 @@
 package seleccion;
 
+import java.util.Random;
+
 import model.funcion;
+import poblacion.individuo;
 import poblacion.poblacion;
 
 public class algotirmoOtro extends algoritmoSeleccion {
 
 	public algotirmoOtro() {
-		super("otro");
+		super("Otros");
 	}
 
 	@Override
+	//Elige el siguiente en base a un random, no controla repeticiones. Es una intención de Bogo sort 
+	//aplicada a la selección
 	public void seleccionar(poblacion p, funcion f) {
-		// TODO Auto-generated method stub
+		Random r=new Random();
+		int anterior = 0;
+		
+		for(int j = 0; j < p.getSize(); j++) {
+			int indice = r.nextInt(p.getSize());
+			addSeleccionado(new individuo(p.getIndividuo(anterior)));
+			anterior += indice; //indice%p.getSize();
+			if(anterior >= p.getSize())anterior -= p.getSize(); //Modulo cutre pero no me funciona el normal a%b
+		}
 	}
 
 	@Override
 	public poblacion ini(poblacion p, funcion f) {
-		// TODO Auto-generated method stub
-		return null;
+		iniSeleccionados(p);
+		seleccionar(p, f);
+		getSeleccionados().iniBest();
+		return getSeleccionados();
 	}
 
 }
 
 
 
-/**PSEUDOCODIGO DEL PROFESOR*/
-/*
- * public Individual[] ranking(Individual[] initPop){
-	Individual[] sortedPop = SortIndividual.selectionSort(initPop);
-	Individual[] futureParents = new Individual[sortedPop.size()]
-	
-	futureParents[0] = sortedPop[0];
-	futureParents[1] = sortedPop[1];
-	int numOfParents = 2;
-
-	double[] fitnessSegments = rankPopulation();
-	double entireSegment = fitnessSegments[fitnessSegments.size() - 1]
-
-	while(numOfParents < futureParents.size()){
-		double x = (double)(Math.random()*entireSegment);
-		if(x <= fitnessSegments[0]){
-			futureParents[numOfParents] = sortedPop[0];
-			numOfParents++;
-		}
-		else{
-			for(int i = 1; i < futureParents.size(); i++){
-				if(x > fitnessSegments[i-1] && x <= fitnessSegments[i]){
-					futureParents[numOfParents] = sortedPop[i];
-					numOfParents++;
-				}
-			}
-			return futureParents;
-		}
-	}
-}
-
-*/
- 

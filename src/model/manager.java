@@ -154,9 +154,9 @@ public class manager {
 		case 4: algSel=new algoritmoTruncamiento();
 			break;
 		/*case 5: algSel=new algoritmoRanking();
-			break;
-		case 6: algSel = new algotirmoOtro();
 			break;*/
+		case 6: algSel = new algotirmoOtro();
+			break;
 		}
 	}
 	public double[][] getBest() {
