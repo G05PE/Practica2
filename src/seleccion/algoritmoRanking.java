@@ -79,7 +79,7 @@ public class algoritmoRanking extends algoritmoSeleccion {
 	private void ordenaFitness(poblacion p) {
 		for(int i = 0; i < p.getSize(); i++) {
 			for(int j = 0; j < p.getSize(); j++) {
-				if(p.getIndividuo(j).getFitness() > p.getIndividuo(i).getFitness()) {
+				if(p.getIndividuo(j).getFitness() < p.getIndividuo(i).getFitness()) {
 					individuo aux = new individuo(p.getIndividuo(i));
 					p.setIndividuoAt(i, p.getIndividuo(j));
 					p.setIndividuoAt(j, aux);

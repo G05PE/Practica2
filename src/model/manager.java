@@ -184,8 +184,8 @@ public class manager {
 			break;
 		case 1: algCruce = new ox();
 			break;
-		case 2:algCruce = new oxPP();
-			break;
+		/*case 2:algCruce = new oxpp();
+			break;*/
 		case 3: algCruce = new cx();
 			break;
 		case 4: algCruce = new erx();
