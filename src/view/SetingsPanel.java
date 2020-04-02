@@ -36,7 +36,7 @@ public class SetingsPanel extends JPanel implements observer{
 			 "ERX", "Ordinal Coding","OwnCrossing"};
 	private String [] listaSelec= {"Roulette", "Determinist Tournament",
 			"Probabilistic Tournament","Stochastic", "Ranking", 
-			"Truncation", "Otros"};
+			"Truncation", "Own"};
 	private String [] listaFich= {"ajuste.txt", "datos12.txt", "datos15.txt", "datos30.txt", "tai100a.txt", "tai256c.txt"};
 	private JComboBox<String> selectSelect;
 	private JComboBox<String> selectCross;
@@ -457,7 +457,7 @@ public class SetingsPanel extends JPanel implements observer{
 		case "Ranking":
 			ctrl.establecerMetodoSeleccion(5);
 			break;
-		case "Otros":
+		case "Own Method":
 			ctrl.establecerMetodoSeleccion(6);
 			break;
 			default:
