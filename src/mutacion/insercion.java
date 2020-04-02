@@ -17,8 +17,8 @@ public class insercion extends mutacion{
 			double prob = Math.random()%1;
 			
 			if(prob < probMutacion){
-				individuo mutado = new individuo();
-				mutado = poblacion.getIndividuo(i);
+				individuo mutado = new individuo(poblacion.getIndividuo(i));
+
 				
 				int maxLong = mutado.getSizeCromosoma();
 				
