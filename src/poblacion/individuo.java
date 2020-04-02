@@ -150,6 +150,4 @@ public class individuo {
 	public void add(gen elem) {
 		cromosoma.add(elem);
 	}
-
-
 }
