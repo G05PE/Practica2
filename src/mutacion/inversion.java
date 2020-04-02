@@ -29,6 +29,7 @@ public class inversion extends mutacion{
 				}
 				invertir(poblacion.getIndividuo(i), punto1, punto2);
 			}
+			poblacion.getIndividuo(i).calcularFitness();
 		}
 	}
 

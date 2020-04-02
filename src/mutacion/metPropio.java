@@ -48,6 +48,7 @@ public class metPropio extends mutacion{
 				
 				poblacion.setIndividuoAt(i, mutado);
 			}
+			poblacion.getIndividuo(i).calcularFitness();
 		}
 	}
 

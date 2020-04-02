@@ -25,6 +25,7 @@ public class exchange extends mutacion{
 				gen aux = poblacion.getIndividuo(i).getCromosomaAt(var1);
 				poblacion.getIndividuo(i).setGen(var1, poblacion.getIndividuo(i).getCromosomaAt(var2));
 				poblacion.getIndividuo(i).setGen(var2, aux);
+				poblacion.getIndividuo(i).calcularFitness();
 			}
 		}
 	}

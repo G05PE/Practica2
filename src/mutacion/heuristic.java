@@ -55,6 +55,7 @@ public class heuristic extends mutacion{
 			 	}	
 			 		 
 			}
+			poblacion.getIndividuo(i).calcularFitness();
 		}
 	}
 	
