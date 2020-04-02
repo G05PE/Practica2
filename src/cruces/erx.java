@@ -56,7 +56,8 @@ public class erx extends algoritmoCruce {
 				gen nuevo2 = new gen(buscaSiguienteGen(padre2, hijo2, j - 1));
 				hijo2.add(nuevo2);
 			}
-			
+			hijo1.calcularFitness();
+			hijo2.calcularFitness();
 			setDescendienteAt(i, hijo1);
 			setDescendienteAt(i+1, hijo2);
 		}

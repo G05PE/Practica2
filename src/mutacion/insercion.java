@@ -49,6 +49,7 @@ public class insercion extends mutacion{
 			 	}
 			 	poblacion.setIndividuoAt(i, mutado);
 			}
+			poblacion.getIndividuo(i).calcularFitness();
 		}
 	}
 
